@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Id;
+
+import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -37,45 +39,54 @@ public class CompetitionController
     @ResponseBody
     public List<Competition> addcompetition(@RequestBody Competition competition)
     {
-        Student student=new Student();
-        Teacher teacher=new Teacher();
-        student.setCompetitionId(competition.getId());
+        competitionRepository.save(competition);
         if (competition.getStudent1()!="")
         {
+            Student student=new Student();
+            student.setCompetitionId(competition.getId());
             student.setName(competition.getStudent1());
             studentRepository.save(student);
         }
         if (competition.getStudent2()!="")
         {
+            Student student=new Student();
+            student.setCompetitionId(competition.getId());
             student.setName(competition.getStudent2());
             studentRepository.save(student);
         }
         if (competition.getStudent3()!="")
         {
+            Student student=new Student();
+            student.setCompetitionId(competition.getId());
             student.setName(competition.getStudent3());
             studentRepository.save(student);
         }
-        teacher.setCompetitionId(competition.getId());
+
         if (competition.getTeacher1()!="")
         {
+            Teacher teacher=new Teacher();
+            teacher.setCompetitionId(competition.getId());
             teacher.setName(competition.getTeacher1());
             teacherRepository.save(teacher);
         }
         if (competition.getTeacher2()!="")
         {
+            Teacher teacher=new Teacher();
+            teacher.setCompetitionId(competition.getId());
             teacher.setName(competition.getTeacher2());
             teacherRepository.save(teacher);
         }
-        competitionRepository.save(competition);
         return competitionRepository.findAll();
     }
 
     @DeleteMapping("/competition")
     @ResponseBody
+    @Transactional
     public List<Competition> deletecompetition(@RequestBody Map<String,Long> map)
     {
-        studentRepository.deleteByCompetitionId(map.get("id"));
-        teacherRepository.deleteByCompetitionId(map.get("id"));
+
+        studentRepository.deleteAllByCompetitionId(map.get("id"));
+        teacherRepository.deleteAllByCompetitionId(map.get("id"));
         competitionRepository.deleteById(map.get("id"));
         return competitionRepository.findAll();
     }

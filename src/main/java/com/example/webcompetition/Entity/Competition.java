@@ -11,7 +11,7 @@ import javax.persistence.Id;
 public class Competition
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long year;
     private String grade;
@@ -25,9 +25,6 @@ public class Competition
     private String belong;
     private String status;
 
-    public Long getId() {
-        return id;
-    }
 
     public Long getYear() {
         return year;
@@ -117,5 +114,15 @@ public class Competition
     public void setTeacher2(String teacher2)
     {
         this.teacher2 = teacher2;
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 }
