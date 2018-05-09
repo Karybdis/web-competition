@@ -13,7 +13,7 @@ public class Competition
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long year;
+    private String year;
     private String grade;
     private String name;
     private String student1;
@@ -21,16 +21,16 @@ public class Competition
     private String student3;
     private String teacher1;
     private String teacher2;
-
     private String belong;
     private String status;
 
-
-    public Long getYear() {
+    public String getYear()
+    {
         return year;
     }
 
-    public void setYear(Long year) {
+    public void setYear(String year)
+    {
         this.year = year;
     }
 
@@ -119,10 +119,5 @@ public class Competition
     public Long getId()
     {
         return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
     }
 }
