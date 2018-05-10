@@ -22,10 +22,10 @@ public class CompetitionController
 {
     @Autowired
     CompetitionRepository competitionRepository;
-    @Autowired
-    StudentRepository studentRepository;
-    @Autowired
-    TeacherRepository teacherRepository;
+//    @Autowired
+//    StudentRepository studentRepository;
+//    @Autowired
+//    TeacherRepository teacherRepository;
 
     @GetMapping("/competition")
     @ResponseBody
@@ -82,8 +82,8 @@ public class CompetitionController
     @Transactional
     public List<Competition> deletecompetition(@RequestBody Map<String,Long> map)
     {
-        studentRepository.deleteAllByCompetitionId(map.get("id"));
-        teacherRepository.deleteAllByCompetitionId(map.get("id"));
+//        studentRepository.deleteAllByCompetitionId(map.get("id"));
+//        teacherRepository.deleteAllByCompetitionId(map.get("id"));
         competitionRepository.deleteById(map.get("id"));
         return competitionRepository.findAll();
     }
