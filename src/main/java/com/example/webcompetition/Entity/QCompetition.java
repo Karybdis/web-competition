@@ -2,24 +2,11 @@ package com.example.webcompetition.Entity;
 
 public class QCompetition
 {
-    private Long id;
     private String year;
     private String grade;
     private String name;
     private String student;
     private String teacher;
-
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-
 
     public String getGrade()
     {

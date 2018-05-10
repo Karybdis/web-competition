@@ -1,7 +1,5 @@
 package com.example.webcompetition.Entity;
 
-
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +21,7 @@ public class Competition
     private String teacher2;
     private String belong;
     private String status;
+    private String certificate;
 
     public String getYear()
     {
@@ -119,5 +118,15 @@ public class Competition
     public Long getId()
     {
         return id;
+    }
+
+    public String getCertificate()
+    {
+        return certificate;
+    }
+
+    public void setCertificate(String certificate)
+    {
+        this.certificate = certificate;
     }
 }
