@@ -1,6 +1,7 @@
 package com.example.webcompetition.Repository;
 
 import com.example.webcompetition.Entity.Competition;
+import org.hibernate.sql.Update;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import java.util.List;
