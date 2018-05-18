@@ -1,0 +1,36 @@
+Manifest-Version: 1.0
+Class-Path: spring-boot-starter-jdbc-2.0.1.RELEASE.jar logback-classic
+ -1.2.3.jar jackson-datatype-jsr310-2.9.5.jar spring-aop-5.0.5.RELEASE
+ .jar javax.annotation-api-1.3.2.jar spring-boot-starter-web-2.0.1.REL
+ EASE.jar jackson-core-2.9.5.jar slf4j-api-1.7.25.jar json-smart-2.3.j
+ ar assertj-core-3.9.1.jar hibernate-jpa-2.1-api-1.0.0.Final.jar jacks
+ on-databind-2.9.5.jar spring-boot-autoconfigure-2.0.1.RELEASE.jar jso
+ n-path-2.4.0.jar classmate-1.3.4.jar mysql-connector-java-5.1.46.jar 
+ spring-expression-5.0.5.RELEASE.jar spring-jdbc-5.0.5.RELEASE.jar jan
+ dex-2.0.3.Final.jar junit-4.12.jar javassist-3.22.0-GA.jar jboss-logg
+ ing-3.3.2.Final.jar asm-5.0.4.jar logback-core-1.2.3.jar spring-boot-
+ 2.0.1.RELEASE.jar spring-boot-starter-test-2.0.1.RELEASE.jar spring-d
+ ata-jpa-2.0.6.RELEASE.jar spring-data-commons-2.0.6.RELEASE.jar jacks
+ on-module-parameter-names-2.9.5.jar tomcat-embed-websocket-8.5.29.jar
+  log4j-to-slf4j-2.10.0.jar objenesis-2.6.jar spring-boot-starter-logg
+ ing-2.0.1.RELEASE.jar hamcrest-library-1.3.jar validation-api-2.0.1.F
+ inal.jar hibernate-core-5.2.16.Final.jar log4j-api-2.10.0.jar xmlunit
+ -core-2.5.1.jar spring-beans-5.0.5.RELEASE.jar spring-boot-starter-da
+ ta-jpa-2.0.1.RELEASE.jar hibernate-validator-6.0.9.Final.jar spring-t
+ x-5.0.5.RELEASE.jar tomcat-embed-el-8.5.29.jar dom4j-1.6.1.jar antlr-
+ 2.7.7.jar spring-boot-starter-2.0.1.RELEASE.jar spring-orm-5.0.5.RELE
+ ASE.jar hamcrest-core-1.3.jar tomcat-embed-core-8.5.29.jar spring-boo
+ t-test-autoconfigure-2.0.1.RELEASE.jar byte-buddy-agent-1.7.11.jar sp
+ ring-boot-starter-tomcat-2.0.1.RELEASE.jar aspectjweaver-1.8.13.jar j
+ sonassert-1.5.0.jar jackson-annotations-2.9.0.jar snakeyaml-1.19.jar 
+ javax.transaction-api-1.2.jar spring-boot-starter-json-2.0.1.RELEASE.
+ jar mockito-core-2.15.0.jar hibernate-commons-annotations-5.0.1.Final
+ .jar spring-webmvc-5.0.5.RELEASE.jar android-json-0.0.20131108.vaadin
+ 1.jar byte-buddy-1.7.11.jar spring-core-5.0.5.RELEASE.jar HikariCP-2.
+ 7.8.jar spring-jcl-5.0.5.RELEASE.jar jackson-datatype-jdk8-2.9.5.jar 
+ accessors-smart-1.2.jar jul-to-slf4j-1.7.25.jar spring-boot-test-2.0.
+ 1.RELEASE.jar spring-aspects-5.0.5.RELEASE.jar spring-boot-starter-ao
+ p-2.0.1.RELEASE.jar spring-context-5.0.5.RELEASE.jar spring-test-5.0.
+ 5.RELEASE.jar spring-web-5.0.5.RELEASE.jar
+Main-Class: com.example.webcompetition.WebCompetitionApplication
+

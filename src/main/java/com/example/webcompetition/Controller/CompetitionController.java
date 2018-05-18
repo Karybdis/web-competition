@@ -2,18 +2,12 @@ package com.example.webcompetition.Controller;
 
 import com.example.webcompetition.Entity.Competition;
 import com.example.webcompetition.Entity.QCompetition;
-import com.example.webcompetition.Entity.Student;
-import com.example.webcompetition.Entity.Teacher;
 import com.example.webcompetition.Repository.CompetitionRepository;
-import com.example.webcompetition.Repository.StudentRepository;
-import com.example.webcompetition.Repository.TeacherRepository;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +16,7 @@ public class CompetitionController
 {
     @Autowired
     CompetitionRepository competitionRepository;
+
 //    @Autowired
 //    StudentRepository studentRepository;
 //    @Autowired
@@ -95,5 +90,4 @@ public class CompetitionController
         List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGrade(),qCompetition.getName(),qCompetition.getStudent(),qCompetition.getTeacher());
         return competitions;
     }
-
 }
