@@ -20,7 +20,7 @@ import java.util.Map;
 @Controller
 public class CompetitionController
 {
-    private static String UPLOADED_FOLDER = "/home/cheng/下载/";
+    private static String UPLOADED_FOLDER = "/home/certificate/";
 
     @Autowired
     CompetitionRepository competitionRepository;
@@ -99,23 +99,21 @@ public class CompetitionController
     }
 
     @PostMapping("/upload")
-    public String singleFileUpload(@RequestParam("file") MultipartFile file,RedirectAttributes redirectAttributes)
+    public String singleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam("id") Long id)
     {
-
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:/competition";
-        }
-
-        try {
-
+        if (file.isEmpty()) { return "redirect:/competition"; }
+        Competition competition=new Competition();
+        try
+        {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
-
-        } catch (IOException e) {
+            competition=competitionRepository.findById(id).get();
+            competition.setCertificate(UPLOADED_FOLDER + file.getOriginalFilename());
+            competitionRepository.save(competition);
+        }
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
         return "redirect:/competition";

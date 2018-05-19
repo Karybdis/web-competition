@@ -115,11 +115,6 @@ public class Competition
         this.teacher2 = teacher2;
     }
 
-    public Long getId()
-    {
-        return id;
-    }
-
     public String getCertificate()
     {
         return certificate;
@@ -128,5 +123,10 @@ public class Competition
     public void setCertificate(String certificate)
     {
         this.certificate = certificate;
+    }
+
+    public Long getId()
+    {
+        return id;
     }
 }
