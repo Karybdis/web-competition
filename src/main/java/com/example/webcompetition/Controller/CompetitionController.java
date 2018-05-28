@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,7 +18,7 @@ import java.util.Map;
 @Controller
 public class CompetitionController
 {
-    private static String UPLOADED_FOLDER = "/home/certificate/";
+    private static String UPLOADED_FOLDER = "/home/certificate/";      //存证书图片的地址
 
     @Autowired
     CompetitionRepository competitionRepository;
@@ -29,14 +27,21 @@ public class CompetitionController
 //    @Autowired
 //    TeacherRepository teacherRepository;
 
-    @GetMapping("/competition")
+//    @GetMapping("/competition")
+//    public String competition()
+//    {
+//        return "competition";
+//
+//    }
+
+    @GetMapping("/competition/list")                 //列出所有比赛
     @ResponseBody
     public List<Competition> listcompetition()
     {
         return competitionRepository.findAll();
     }
 
-    @PostMapping("/competition")
+    @PostMapping("/competition")                     //添加比赛
     @ResponseBody
     public List<Competition> addcompetition(@RequestBody Competition competition)
     {
@@ -79,7 +84,7 @@ public class CompetitionController
         return competitionRepository.findAll();
     }
 
-    @DeleteMapping("/competition")
+    @DeleteMapping("/competition")                      //删除比赛
     @ResponseBody
     @Transactional
     public List<Competition> deletecompetition(@RequestBody Map<String,Long> map)
@@ -90,32 +95,29 @@ public class CompetitionController
         return competitionRepository.findAll();
     }
 
-    @PostMapping("/competition/query")
+    @PostMapping("/competition/query")                  //根据要求查询比赛
     @ResponseBody
-    public List<Competition> querytest(@RequestBody QCompetition qCompetition)
+    public List<Competition> querycompetition(@RequestBody QCompetition qCompetition)
     {
         List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGrade(),qCompetition.getName(),qCompetition.getStudent(),qCompetition.getTeacher());
         return competitions;
     }
 
-    @PostMapping("/upload")
-    public String singleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam("id") Long id)
+    @PostMapping("/competition/upload")                 //上传证书图片
+    @ResponseBody
+    public String singleFileUpload(@RequestParam("file") MultipartFile file)
     {
         if (file.isEmpty()) { return "redirect:/competition"; }
-        Competition competition=new Competition();
         try
         {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
             Files.write(path, bytes);
-            competition=competitionRepository.findById(id).get();
-            competition.setCertificate(UPLOADED_FOLDER + file.getOriginalFilename());
-            competitionRepository.save(competition);
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-        return "redirect:/competition";
+        return file.getOriginalFilename();
     }
 }
