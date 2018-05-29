@@ -50,7 +50,6 @@ var message_table = new Vue({
           message_table.competitions.push({
             id: item.id,
             year: item.year,
-
             grade: item.grade,
             name: item.name,
             total_students: item.student1 +
@@ -149,15 +148,25 @@ var add_table = new Vue({
   },
   methods: {
     add: function () {
-      $.ajax({
-        url: "http://106.14.223.207:8081/competition/",
-        data: JSON.stringify(add_table.add_json),
-        type: "post",
-        contentType: "application/json;charset=utf-8",
-        success: function (json_data) {
-          location.reload();
-        }
-      });
+      var tip_msg = "";
+      if (add_table.add_json.year == "") tip_msg += (tip_msg == "" ? "" : "、")+"获奖年度" ;
+      if (add_table.add_json.grade == "") tip_msg += (tip_msg == "" ? "" : "、")+"获奖级别";
+      if (add_table.add_json.name == "") tip_msg += (tip_msg == "" ? "" : "、")+"所获奖项";
+      if (add_table.add_json.student1 == "") tip_msg += (tip_msg == "" ? "" : "、")+"学生负责人";
+      if (add_table.add_json.teacher1 == "") tip_msg += (tip_msg == "" ? "" : "、")+"指导教师1";
+      if (add_table.add_json.belong == "") tip_msg += (tip_msg == "" ? "" : "、")+"所属单位";
+      if (tip_msg != "") alert("请填写" + tip_msg + "!");
+      else {
+        $.ajax({
+          url: "http://106.14.223.207:8081/competition/",
+          data: JSON.stringify(add_table.add_json),
+          type: "post",
+          contentType: "application/json;charset=utf-8",
+          success: function (json_data) {
+            location.reload();
+          }
+        });
+      }
     }
   }
 });
