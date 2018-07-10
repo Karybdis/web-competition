@@ -8,8 +8,6 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Column(name="competition_id")
-    private Long competitionId;
     @Column(name="class")
     private String classId;
     private String academy;
@@ -27,14 +25,6 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getCompetitionId() {
-        return competitionId;
-    }
-
-    public void setCompetitionId(Long competitionId) {
-        this.competitionId = competitionId;
     }
 
     public String getClassId()
