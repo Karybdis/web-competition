@@ -28,8 +28,8 @@ public class CompetitionController
 
 //    @GetMapping("/competition")
 //    public String competition()
-//    {
-//        return "competition";
+//    {huanhang
+//        return "competition";s
 //
 //    }
 
@@ -98,7 +98,8 @@ public class CompetitionController
     @ResponseBody
     public List<Competition> querycompetition(@RequestBody QCompetition qCompetition)
     {
-        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGrade(),qCompetition.getName(),qCompetition.getStudent(),qCompetition.getTeacher());
+//        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGrade(),qCompetition.getName(),qCompetition.getStudent(),qCompetition.getTeacher());
+        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGradeLarge(),qCompetition.getGradeSmall(),qCompetition.getNameLarge(),qCompetition.getNameSmall(),qCompetition.getNameDetail(),qCompetition.getStudent(),qCompetition.getTeacher());
         return competitions;
     }
 

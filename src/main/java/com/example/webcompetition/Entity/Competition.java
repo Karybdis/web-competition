@@ -1,9 +1,6 @@
 package com.example.webcompetition.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Competition
@@ -12,8 +9,18 @@ public class Competition
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String year;
-    private String grade;
-    private String name;
+//    private String grade;
+//    private String name;
+    @Column(name="grade_large")
+    private String gradeLarge;
+    @Column(name="grade_small")
+    private String gradeSmall;
+    @Column(name="name_large")
+    private String nameLarge;
+    @Column(name="name_small")
+    private String nameSmall;
+    @Column(name="name_detail")
+    private String nameDetail;
     private String student1;
     private String student2;
     private String student3;
@@ -33,13 +40,13 @@ public class Competition
         this.year = year;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
 
     public String getBelong() {
         return belong;
@@ -57,13 +64,13 @@ public class Competition
         this.status = status;
     }
 
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
+//    public String getGrade() {
+//        return grade;
+//    }
+//
+//    public void setGrade(String grade) {
+//        this.grade = grade;
+//    }
 
     public String getStudent1()
     {
@@ -128,5 +135,56 @@ public class Competition
     public Long getId()
     {
         return id;
+    }
+
+
+    public String getGradeLarge()
+    {
+        return gradeLarge;
+    }
+
+    public void setGradeLarge(String gradeLarge)
+    {
+        this.gradeLarge = gradeLarge;
+    }
+
+    public String getGradeSmall()
+    {
+        return gradeSmall;
+    }
+
+    public void setGradeSmall(String gradeSmall)
+    {
+        this.gradeSmall = gradeSmall;
+    }
+
+    public String getNameLarge()
+    {
+        return nameLarge;
+    }
+
+    public void setNameLarge(String nameLarge)
+    {
+        this.nameLarge = nameLarge;
+    }
+
+    public String getNameSmall()
+    {
+        return nameSmall;
+    }
+
+    public void setNameSmall(String nameSmall)
+    {
+        this.nameSmall = nameSmall;
+    }
+
+    public String getNameDetail()
+    {
+        return nameDetail;
+    }
+
+    public void setNameDetail(String nameDetail)
+    {
+        this.nameDetail = nameDetail;
     }
 }

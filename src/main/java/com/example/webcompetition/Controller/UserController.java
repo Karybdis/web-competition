@@ -26,7 +26,7 @@ public class UserController
     @Autowired
     TeacherRepository teacherRepository;
 
-    @PostMapping("/competition/teacher")
+    @PostMapping("/teacher")
     @ResponseBody
     public List<Teacher> PutTeacherIntoDB(@RequestParam("file") MultipartFile file)
     {
@@ -61,7 +61,7 @@ public class UserController
         return teacherRepository.findAll();
     }
 
-    @PostMapping("/competition/student")
+    @PostMapping("/student")
     @ResponseBody
     public List<Student> PutStudentIntoDB(@RequestParam("file") MultipartFile file)
     {
