@@ -29,7 +29,7 @@ public class CompetitionController
 //    @GetMapping("/competition")
 //    public String competition()
 //    {huanhang
-//        return "competition";s
+//        return "competition";
 //
 //    }
 
@@ -56,7 +56,7 @@ public class CompetitionController
 //        {
 //            Student student=new Student();
 //            student.setCompetitionId(competition.getId());
-//            student.setName(competition.getStudent2());
+//            student.setName(competition.getStudent2()
 //            studentRepository.save(student);
 //        }
 //        if (competition.getStudent3()!="")
@@ -99,7 +99,7 @@ public class CompetitionController
     public List<Competition> querycompetition(@RequestBody QCompetition qCompetition)
     {
 //        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGrade(),qCompetition.getName(),qCompetition.getStudent(),qCompetition.getTeacher());
-        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGradeLarge(),qCompetition.getGradeSmall(),qCompetition.getNameLarge(),qCompetition.getNameSmall(),qCompetition.getNameDetail(),qCompetition.getStudent(),qCompetition.getTeacher());
+        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGradeLarge(),qCompetition.getGradeSmall(),qCompetition.getNameLarge(),qCompetition.getNameDetail(),qCompetition.getStudent(),qCompetition.getTeacher());
         return competitions;
     }
 

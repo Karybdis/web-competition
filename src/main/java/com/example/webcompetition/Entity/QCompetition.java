@@ -1,21 +1,13 @@
 package com.example.webcompetition.Entity;
 
-import javax.persistence.Column;
-
 public class QCompetition
 {
     private String year;
 //    private String grade;
 //    private String name;
-    @Column(name="grade_large")
     private String gradeLarge;
-    @Column(name="grade_small")
     private String gradeSmall;
-    @Column(name="name_large")
     private String nameLarge;
-    @Column(name="name_small")
-    private String nameSmall;
-    @Column(name="name_detail")
     private String nameDetail;
     private String student;
     private String teacher;
@@ -98,16 +90,6 @@ public class QCompetition
     public void setNameLarge(String nameLarge)
     {
         this.nameLarge = nameLarge;
-    }
-
-    public String getNameSmall()
-    {
-        return nameSmall;
-    }
-
-    public void setNameSmall(String nameSmall)
-    {
-        this.nameSmall = nameSmall;
     }
 
     public String getNameDetail()
