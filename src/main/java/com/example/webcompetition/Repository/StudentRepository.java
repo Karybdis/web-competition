@@ -11,4 +11,5 @@ public interface StudentRepository extends CrudRepository<Student,Long>
 //    @Modifying
 //    void deleteAllByCompetitionId(Long competition);
     List<Student> findAll();
+    Student findByName(String name);
 }

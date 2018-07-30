@@ -11,4 +11,5 @@ public interface TeacherRepository extends CrudRepository<Teacher,Long>
 //    @Modifying
 //    void deleteAllByCompetitionId(Long id);
     List<Teacher> findAll();
+    Teacher findByName(String name);
 }

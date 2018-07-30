@@ -10,6 +10,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -98,5 +99,21 @@ public class UserController
             e.printStackTrace();
         }
         return studentRepository.findAll();
+    }
+
+    @PostMapping("/student/info")
+    @ResponseBody
+    public Student StudentInfo(@RequestParam("name") String name)
+    {
+        Student student=studentRepository.findByName(name);
+        return student;
+    }
+
+    @PostMapping("/teacher/info")
+    @ResponseBody
+    public Teacher TeacherInfo(@RequestParam("name") String name)
+    {
+        Teacher teacher=teacherRepository.findByName(name);
+        return teacher;
     }
 }

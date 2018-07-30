@@ -35,14 +35,14 @@ public class CompetitionController
 
     @GetMapping("/competition/list")                 //列出所有比赛
     @ResponseBody
-    public List<Competition> listcompetition()
+    public List<Competition> ListCompetition()
     {
         return competitionRepository.findAll();
     }
 
     @PostMapping("/competition")                     //添加比赛
     @ResponseBody
-    public List<Competition> addcompetition(@RequestBody Competition competition)
+    public List<Competition> AddCompetition(@RequestBody Competition competition)
     {
         competitionRepository.save(competition);
 //        if (competition.getStudent1()!="")
@@ -86,7 +86,7 @@ public class CompetitionController
     @DeleteMapping("/competition")                      //删除比赛
     @ResponseBody
     @Transactional
-    public List<Competition> deletecompetition(@RequestBody Map<String,Long> map)
+    public List<Competition> DeleteCompetition(@RequestBody Map<String,Long> map)
     {
 //        studentRepository.deleteAllByCompetitionId(map.get("id"));
 //        teacherRepository.deleteAllByCompetitionId(map.get("id"));
@@ -96,7 +96,7 @@ public class CompetitionController
 
     @PostMapping("/competition/query")                  //根据要求查询比赛
     @ResponseBody
-    public List<Competition> querycompetition(@RequestBody QCompetition qCompetition)
+    public List<Competition> QueryCompetition(@RequestBody QCompetition qCompetition)
     {
 //        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGrade(),qCompetition.getName(),qCompetition.getStudent(),qCompetition.getTeacher());
         List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGradeLarge(),qCompetition.getGradeSmall(),qCompetition.getNameLarge(),qCompetition.getNameDetail(),qCompetition.getStudent(),qCompetition.getTeacher());
