@@ -18,7 +18,8 @@ import java.util.Map;
 @Controller
 public class CompetitionController
 {
-    private static String UPLOADED_FOLDER = "/home/certificate/";      //存证书图片的地址
+//    private static String UPLOADED_FOLDER = "/home/certificate/";      //存证书图片的地址
+    private static String UPLOADED_FOLDER = "/home/cheng/下载/";
     @Autowired
     CompetitionRepository competitionRepository;
 //    @Autowired
@@ -28,7 +29,7 @@ public class CompetitionController
 
 //    @GetMapping("/competition")
 //    public String competition()
-//    {huanhang
+//    {
 //        return "competition";
 //
 //    }
@@ -90,7 +91,18 @@ public class CompetitionController
     {
 //        studentRepository.deleteAllByCompetitionId(map.get("id"));
 //        teacherRepository.deleteAllByCompetitionId(map.get("id"));
+        Competition competition=competitionRepository.findById(map.get("id")).get();
+        Path path=Paths.get(UPLOADED_FOLDER+competition.getCertificate());
+        try
+        {
+            Files.delete(path);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
         competitionRepository.deleteById(map.get("id"));
+
         return competitionRepository.findAll();
     }
 
