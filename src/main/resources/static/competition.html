@@ -73,11 +73,6 @@
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title" id="page-title">竞赛档案列表</span>
                 <div class="mdl-layout-spacer"></div>
-                <!-- <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-          <li class="mdl-menu__item">About</li>
-          <li class="mdl-menu__item">Contact</li>
-          <li class="mdl-menu__item">Legal information</li>
-        </ul> -->
             </div>
         </header>
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
@@ -87,9 +82,9 @@
                     <span>hello@example.com</span>
                     <div class="mdl-layout-spacer"></div>
                     <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
-            <i class="material-icons" role="presentation">arrow_drop_down</i>
-            <span class="visuallyhidden">Accounts</span>
-          </button>
+                        <i class="material-icons" role="presentation">arrow_drop_down</i>
+                        <span class="visuallyhidden">Accounts</span>
+                    </button>
                     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
                         <li class="mdl-menu__item">hello@example.com</li>
                         <li class="mdl-menu__item">info@example.com</li>
@@ -99,9 +94,9 @@
                 </div>
             </header>
             <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-                <a class="mdl-navigation__link" @click="show_first" id="first-link">
+                <a class="mdl-navigation__link" href="./competition.html">
                     <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>竞赛档案列表</a>
-                <a class="mdl-navigation__link" @click="show_sec" id="sec-link">
+                <a class="mdl-navigation__link" href="./addnew.html">
                     <i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>添加档案</a>
                 <div class="mdl-layout-spacer"></div>
                 <a class="mdl-navigation__link" href="">
@@ -111,27 +106,12 @@
             </nav>
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
-            <div class="container_3-707 container insideContainer_14D_s col" id="first">
+            <div class="container_3-707 container insideContainer_14D_s col">
                 <div class="card">
                     <div class="card-block">
                         <table id="query-message" class="problemSetsTable_1C8Yc table">
                             <tbody>
                                 <tr>
-                                    <td>
-                                        <input class="custom-input" v-model="query_json.year" type="text" placeholder="按年度" />
-                                    </td>
-                                    <td>
-                                        <input class="custom-input" v-model="query_json.grade" type="text" placeholder="按获奖级别" />
-                                    </td>
-                                    <td>
-                                        <input class="custom-input" v-model="query_json.name" type="text" placeholder="按竞赛名称" />
-                                    </td>
-                                    <td>
-                                        <input class="custom-input" v-model="query_json.student" type="text" placeholder="按学生姓名" />
-                                    </td>
-                                    <td>
-                                        <input class="custom-input" v-model="query_json.teacher" type="text" placeholder="按指导教师" />
-                                    </td>
                                     <td>
                                         <button @click="query" class="sub-btn btn-primary">查询</button>
                                     </td>
@@ -142,13 +122,12 @@
                         <table id="total-message" class="problemSetsTable_1C8Yc table">
                             <thead>
                                 <tr>
-                                    <th>序号</th>
                                     <th>获奖年度</th>
-                                    <th>获奖级别</th>
-                                    <th>竞赛名称</th>
+                                    <th>类别</th>
+                                    <th>奖级</th>
+                                    <th>作品名</th>
                                     <th>获奖学生姓名</th>
-                                    <th>指导老师1</th>
-                                    <th>指导老师2</th>
+                                    <th>指导老师</th>
                                     <th>所属单位</th>
                                     <th>审核状态</th>
                                     <th>证书预览</th>
@@ -158,25 +137,22 @@
                             <tbody>
                                 <tr v-for="c in competitions">
                                     <td>
-                                        {{c.id}}
-                                    </td>
-                                    <td>
                                         {{c.year}}
                                     </td>
                                     <td>
-                                        {{c.grade}}
+                                        {{c.category}}
+                                    </td>
+                                    <td>
+                                        {{c.award}}
                                     </td>
                                     <td>
                                         {{c.name}}
                                     </td>
                                     <td>
-                                        {{c.total_students}}
+                                        {{c.students}}
                                     </td>
                                     <td>
-                                        {{c.teacher1}}
-                                    </td>
-                                    <td>
-                                        {{c.teacher2}}
+                                        {{c.teachers}}
                                     </td>
                                     <td>
                                         {{c.belong}}
@@ -203,134 +179,8 @@
                 </div>
 
             </div>
-            <div class="container_3-707 container insideContainer_14D_s col" id="sec">
-                <div class="card">
-                    <div class="card-block">
-                        <div class="add-form" id="uploadpic">
-                            <div id="post-certificate">
-                                <input type="file" style="display: inline-block;" @change="changeImage($event)" ref="picInput" />
-                                <button @click="post_pic" class="sub-btn btn-info">上传证书</button><span class="upload-done" id="oktoload"></span>
-                                <div><img id="preview" /></div>
-                            </div>
-                        </div>
-                        <table id="add-message" class="table add-table">
-                            <tr class="add-table-tr">
-                                <th class="col-sm-2 control-label">年度<span style="color: red;">   *</span></th>
-                                <td class="col-sm-10">
-                                    <input class="custom-input" v-model="add_json.year" type="text" placeholder="年度"/>
-                                </td>
-                            </tr>
-                            <tr class="add-table-tr">
-                                <th class="col-sm-2 control-label">获奖级别<span style="color: red;">   *</span></th>
-                                <td class="col-sm-10">
-                                    <input class="custom-input" v-model="add_json.grade" type="text" placeholder="获奖级别"/>
-                                </td>
-                            </tr> 
-                            <tr class="add-table-tr">
-                                <th class="col-sm-2 control-label">获奖名称<span style="color: red;">   *</span></th>
-                                <td class="col-sm-10">
-                                    <input class="custom-input" v-model="add_json.name" type="text" placeholder="竞赛名称" />
-                                </td>
-                            </tr>
-                            <tr class="add-table-tr">
-                                <th class="col-sm-2 control-label">学生姓名<span style="color: red;">   *</span></th>
-                                <td class="col-sm-10">
-                                    <input class="custom-input" v-model="add_json.student1" type="text" placeholder="学生姓名1" />
-                                </td>
-                            </tr>
-                            <tr class="add-table-tr">
-                                <th class="col-sm-2 control-label"></th>
-                                <td class="col-sm-10">
-                                    <input class="custom-input" v-model="add_json.student2" type="text" placeholder="学生姓名2" />
-                                </td>
-                            </tr>
-                            <tr class="add-table-tr">
-                                <th class="col-sm-2 control-label"></th>
-                                <td class="col-sm-10">
-
-                                    <input class="custom-input" v-model="add_json.student3" type="text" placeholder="学生姓名3" />
-                                </td>
-                            </tr>
-                            <tr class="add-table-tr">
-                                <th class="col-sm-2 control-label">指导教师<span style="color: red;">   *</span></th>
-                                <td class="col-sm-10">
-                                    <input class="custom-input" v-model="add_json.teacher1" type="text" placeholder="指导教师1" />
-                                </td>
-                            </tr>
-                            <tr class="add-table-tr">
-                                <th></th>
-                                <td>
-                                    <input class="custom-input" v-model="add_json.teacher2" type="text" placeholder="指导教师2" />
-                                </td>
-                            </tr>
-
-                            <tr class="add-table-tr">
-                                <th>所属单位<span style="color: red;">   *</span></th>
-                                <td>
-                                    <input class="custom-input" v-model="add_json.belong" type="text" placeholder="所属单位" />
-                                </td>
-                            </tr>
-                            <tr class="add-table-tr">
-                                <th></th>
-                                <td class="col-sm-10">
-                                    <button @click="add" class="sub-btn btn-info" style="width: 100%;">添加</button>
-                                </td>
-                            </tr>
-                        </table>
-
-                    </div>
-                </div>
-
-            </div>
         </main>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="position: fixed; left: -1000px; height: -1000px;">
-    <defs>
-      <mask id="piemask" maskContentUnits="objectBoundingBox">
-        <circle cx=0.5 cy=0.5 r=0.49 fill="white" />
-        <circle cx=0.5 cy=0.5 r=0.40 fill="black" />
-      </mask>
-      <g id="piechart">
-        <circle cx=0.5 cy=0.5 r=0.5 />
-        <path d="M 0.5 0.5 0.5 0 A 0.5 0.5 0 0 1 0.95 0.28 z" stroke="none" fill="rgba(255, 255, 255, 0.75)" />
-      </g>
-    </defs>
-  </svg>
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 250" style="position: fixed; left: -1000px; height: -1000px;">
-    <defs>
-      <g id="chart">
-        <g id="Gridlines">
-          <line fill="#888888" stroke="#888888" stroke-miterlimit="10" x1="0" y1="27.3" x2="468.3" y2="27.3" />
-          <line fill="#888888" stroke="#888888" stroke-miterlimit="10" x1="0" y1="66.7" x2="468.3" y2="66.7" />
-          <line fill="#888888" stroke="#888888" stroke-miterlimit="10" x1="0" y1="105.3" x2="468.3" y2="105.3" />
-          <line fill="#888888" stroke="#888888" stroke-miterlimit="10" x1="0" y1="144.7" x2="468.3" y2="144.7" />
-          <line fill="#888888" stroke="#888888" stroke-miterlimit="10" x1="0" y1="184.3" x2="468.3" y2="184.3" />
-        </g>
-        <g id="Numbers">
-          <text transform="matrix(1 0 0 1 485 29.3333)" fill="#888888" font-family="'Roboto'" font-size="9">500</text>
-          <text transform="matrix(1 0 0 1 485 69)" fill="#888888" font-family="'Roboto'" font-size="9">400</text>
-          <text transform="matrix(1 0 0 1 485 109.3333)" fill="#888888" font-family="'Roboto'" font-size="9">300</text>
-          <text transform="matrix(1 0 0 1 485 149)" fill="#888888" font-family="'Roboto'" font-size="9">200</text>
-          <text transform="matrix(1 0 0 1 485 188.3333)" fill="#888888" font-family="'Roboto'" font-size="9">100</text>
-          <text transform="matrix(1 0 0 1 0 249.0003)" fill="#888888" font-family="'Roboto'" font-size="9">1</text>
-          <text transform="matrix(1 0 0 1 78 249.0003)" fill="#888888" font-family="'Roboto'" font-size="9">2</text>
-          <text transform="matrix(1 0 0 1 154.6667 249.0003)" fill="#888888" font-family="'Roboto'" font-size="9">3</text>
-          <text transform="matrix(1 0 0 1 232.1667 249.0003)" fill="#888888" font-family="'Roboto'" font-size="9">4</text>
-          <text transform="matrix(1 0 0 1 309 249.0003)" fill="#888888" font-family="'Roboto'" font-size="9">5</text>
-          <text transform="matrix(1 0 0 1 386.6667 249.0003)" fill="#888888" font-family="'Roboto'" font-size="9">6</text>
-          <text transform="matrix(1 0 0 1 464.3333 249.0003)" fill="#888888" font-family="'Roboto'" font-size="9">7</text>
-        </g>
-        <g id="Layer_5">
-          <polygon opacity="0.36" stroke-miterlimit="10" points="0,223.3 48,138.5 154.7,169 211,88.5
-              294.5,80.5 380,165.2 437,75.5 469.5,223.3 	" />
-        </g>
-        <g id="Layer_4">
-          <polygon stroke-miterlimit="10" points="469.3,222.7 1,222.7 48.7,166.7 155.7,188.3 212,132.7
-              296.7,128 380.7,184.3 436.7,125 	" />
-        </g>
-      </g>
-    </defs>
-  </svg>
     <!-- <script src="https://code.getmdl.io/1.3.0/material.min.js"></script> -->
     <script src="./quote/material.min.js"></script>
     <!-- <script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script> -->

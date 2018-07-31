@@ -18,8 +18,8 @@ import java.util.Map;
 @Controller
 public class CompetitionController
 {
-//    private static String UPLOADED_FOLDER = "/home/certificate/";      //存证书图片的地址
-    private static String UPLOADED_FOLDER = "/home/cheng/下载/";
+    private static String UPLOADED_FOLDER = "/home/certificate/";      //存证书图片的地址
+//    private static String UPLOADED_FOLDER = "/home/cheng/下载/";
     @Autowired
     CompetitionRepository competitionRepository;
 //    @Autowired
