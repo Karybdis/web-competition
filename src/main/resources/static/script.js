@@ -13,13 +13,27 @@
         certificate                               证书地址（待定）
     }
 */
+
+/*
+    加载界面
+*/
+var loading_page = new Vue({
+  el: ".loading-page",
+  data: {
+    isActive: true
+  }
+});
+
+
+
 var message_table = new Vue({
   el: "#total-message",
   data: {
-    competitions: []
+    competitions: [],
+    isActive: true
   },
   mounted() {
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       /*
           json_data格式：
           {
@@ -36,8 +50,8 @@ var message_table = new Vue({
             certificate             证书地址
           }
       */
-      $.get("http://106.14.223.207:8081/competition/list", function(json_data) {
-        $.each(json_data, function(idx, item) {
+      $.get("http://106.14.223.207:8081/competition/list", function (json_data) {
+        $.each(json_data, function (idx, item) {
           message_table.competitions.push({
             id: item.id,
             year: item.year,
@@ -50,12 +64,13 @@ var message_table = new Vue({
             approval_status: item.status,
             certificate: item.certificate
           });
+          loading_page.isActive = false;
         });
       });
     });
   },
   methods: {
-    delete_c: function(cid) {
+    delete_c: function (cid) {
       var tmp_c = {
         id: cid
       };
@@ -65,7 +80,7 @@ var message_table = new Vue({
         data: JSON.stringify(tmp_c),
         type: "delete",
         contentType: "application/json;charset=utf-8",
-        success: function(json_data) {
+        success: function (json_data) {
           location.reload();
         }
       });
@@ -88,25 +103,24 @@ var query_table = new Vue({
     }
   },
   methods: {
-    query: function() {
+    query: function () {
       console.log(query_table.query_json);
       $.ajax({
         url: "http://106.14.223.207:8081/competition/query",
         data: JSON.stringify(query_table.query_json),
         type: "post",
         contentType: "application/json;charset=utf-8",
-        success: function(json_data) {
-          $.each(message_table.competitions, function(idx, item) {
+        success: function (json_data) {
+          $.each(message_table.competitions, function (idx, item) {
             message_table.competitions.pop();
           });
-          $.each(json_data, function(idx, item) {
+          $.each(json_data, function (idx, item) {
             message_table.competitions.push({
               id: item.id,
               year: item.year,
               grade: item.grade,
               name: item.name,
-              total_students:
-                item.student1 +
+              total_students: item.student1 +
                 (item.student2 == "" ? "" : "、" + item.student2) +
                 (item.student3 == "" ? "" : "、" + item.student3),
               teacher1: item.teacher1,
@@ -143,7 +157,7 @@ var add_table = new Vue({
     }
   },
   methods: {
-    add: function() {
+    add: function () {
       var tip_msg = "";
       if (add_table.add_json.year == "")
         tip_msg += (tip_msg == "" ? "" : "、") + "获奖年度";
@@ -164,7 +178,7 @@ var add_table = new Vue({
           data: JSON.stringify(add_table.add_json),
           type: "post",
           contentType: "application/json;charset=utf-8",
-          success: function(json_data) {
+          success: function (json_data) {
             location.reload();
           }
         });
@@ -182,7 +196,7 @@ var ceritificate_pic = new Vue({
     file: ""
   },
   methods: {
-    post_pic: function() {
+    post_pic: function () {
       var image = new FormData();
       image.append("file", ceritificate_pic.file);
       console.log(image.file);
@@ -192,19 +206,19 @@ var ceritificate_pic = new Vue({
         type: "post",
         contentType: false,
         processData: false,
-        success: function(redata) {
+        success: function (redata) {
           add_table.add_json.certificate = redata;
           document.getElementById("preview").src = redata;
           document.getElementById("oktoload").style.display = "inline-flex";
         }
       });
     },
-    changeImage: function(e) {
+    changeImage: function (e) {
       var file = e.target.files[0];
       var reader = new FileReader();
       var that = this;
       reader.readAsDataURL(file);
-      reader.onload = function(e) {
+      reader.onload = function (e) {
         that.pic = this.result;
         ceritificate_pic.file = file;
         document.getElementById("preview").src = e.target.result;
@@ -212,3 +226,7 @@ var ceritificate_pic = new Vue({
     }
   }
 });
+
+window.onload() = function () {
+  loading_page.isActive = true;
+}

@@ -2,7 +2,12 @@ package com.example.webcompetition.Controller;
 
 import com.example.webcompetition.Entity.Competition;
 import com.example.webcompetition.Entity.QCompetition;
+import com.example.webcompetition.Entity.Teacher;
 import com.example.webcompetition.Repository.CompetitionRepository;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -131,5 +137,50 @@ public class CompetitionController
             e.printStackTrace();
         }
         return file.getOriginalFilename();
+    }
+
+    @PostMapping("/competition/excel")
+    @ResponseBody
+    public List<Competition> PutCompetitionIntoDB(@RequestParam("file") MultipartFile file)
+    {
+        try
+        {
+            DecimalFormat decimalFormat=new DecimalFormat("0");
+            XSSFWorkbook xssfWorkbook=new XSSFWorkbook(file.getInputStream());
+            for (int sheetNum=0;sheetNum<xssfWorkbook.getNumberOfSheets();sheetNum++)
+            {
+                XSSFSheet xssfSheet=xssfWorkbook.getSheetAt(sheetNum);
+                for (int rowNum=1;rowNum<=xssfSheet.getLastRowNum();rowNum++)
+                {
+                    XSSFRow xssfRow=xssfSheet.getRow(rowNum);
+                    if (xssfRow!=null)
+                    {
+                        Competition competition=new Competition();
+                        XSSFCell xssfCell1=xssfRow.getCell(0);
+                        XSSFCell xssfCell2=xssfRow.getCell(1);
+                        XSSFCell xssfCell3=xssfRow.getCell(2);
+                        XSSFCell xssfCell4=xssfRow.getCell(3);
+                        XSSFCell xssfCell5=xssfRow.getCell(4);
+                        XSSFCell xssfCell6=xssfRow.getCell(5);
+                        XSSFCell xssfCell7=xssfRow.getCell(6);
+                        XSSFCell xssfCell8=xssfRow.getCell(7);
+                        competition.setYear(decimalFormat.format(xssfCell1.getNumericCellValue()));
+                        competition.setGradeLarge(String.valueOf(xssfCell2));
+                        competition.setGradeSmall(String.valueOf(xssfCell3));
+                        competition.setNameLarge(String.valueOf(xssfCell4));
+                        competition.setNameDetail(String.valueOf(xssfCell5));
+                        competition.setStudent(String.valueOf(xssfCell6));
+                        competition.setTeacher(String.valueOf(xssfCell7));
+                        competition.setBelong(String.valueOf(xssfCell8));
+                        competitionRepository.save(competition);
+                    }
+                }
+            }
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        return competitionRepository.findAll();
     }
 }

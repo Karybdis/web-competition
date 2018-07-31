@@ -53,21 +53,11 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- <link rel="stylesheet" href="./quote/bootstrap.min.css"> -->
     <link rel="stylesheet" href="__style.css">
-    <link rel="stylesheet" href="styles.min.css">
-    <style>
-        #view-source {
-            position: fixed;
-            display: block;
-            right: 0;
-            bottom: 0;
-            margin-right: 40px;
-            margin-bottom: 40px;
-            z-index: 900;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
             <div class="mdl-layout__header-row">
@@ -75,6 +65,7 @@
                 <div class="mdl-layout-spacer"></div>
             </div>
         </header>
+
         <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
             <header class="demo-drawer-header">
                 <img src="images/user.jpg" class="demo-avatar">
@@ -106,6 +97,15 @@
             </nav>
         </div>
         <main class="mdl-layout__content mdl-color--grey-100">
+            <div v-bind:class="{ active : isActive }" class="loading-page">
+                <div class="spinner">
+                    <div class="rect1"></div>
+                    <div class="rect2"></div>
+                    <div class="rect3"></div>
+                    <div class="rect4"></div>
+                    <div class="rect5"></div>
+                </div>
+            </div>
             <div class="container_3-707 container insideContainer_14D_s col">
                 <div class="card">
                     <div class="card-block">
