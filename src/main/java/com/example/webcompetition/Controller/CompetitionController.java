@@ -2,7 +2,6 @@ package com.example.webcompetition.Controller;
 
 import com.example.webcompetition.Entity.Competition;
 import com.example.webcompetition.Entity.QCompetition;
-import com.example.webcompetition.Entity.Teacher;
 import com.example.webcompetition.Repository.CompetitionRepository;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;

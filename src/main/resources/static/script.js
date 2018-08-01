@@ -29,8 +29,7 @@ var loading_page = new Vue({
 var message_table = new Vue({
   el: "#total-message",
   data: {
-    competitions: [],
-    isActive: true
+    competitions: []
   },
   mounted() {
     this.$nextTick(function () {
@@ -71,13 +70,9 @@ var message_table = new Vue({
   },
   methods: {
     delete_c: function (cid) {
-      var tmp_c = {
-        id: cid
-      };
-      console.log(cid);
       $.ajax({
         url: "http://106.14.223.207:8081/competition/",
-        data: JSON.stringify(tmp_c),
+        data: JSON.stringify({id:cid}),
         type: "delete",
         contentType: "application/json;charset=utf-8",
         success: function (json_data) {
