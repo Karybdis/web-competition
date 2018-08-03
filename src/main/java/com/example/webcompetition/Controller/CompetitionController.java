@@ -3,11 +3,17 @@ package com.example.webcompetition.Controller;
 import com.example.webcompetition.Entity.Competition;
 import com.example.webcompetition.Entity.QCompetition;
 import com.example.webcompetition.Repository.CompetitionRepository;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.engine.jdbc.Size;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,11 +45,30 @@ public class CompetitionController
 //
 //    }
 
-    @GetMapping("/competition/list")                 //列出所有比赛
+    @GetMapping("/competition/list")                 //列出第一页比赛
     @ResponseBody
     public List<Competition> ListCompetition()
     {
-        return competitionRepository.findAll();
+        Pageable pageable=PageRequest.of(0,15, Sort.Direction.ASC,"id");
+        Page<Competition> competitions=competitionRepository.findAll(pageable);
+        return competitions.getContent();
+    }
+
+    @GetMapping("/competition/page/{page}")
+    @ResponseBody
+    public List<Competition> PageCompetition(@PathVariable int page)
+    {
+        Pageable pageable=PageRequest.of(page,15, Sort.Direction.ASC,"id");
+        Page<Competition> competitions=competitionRepository.findAll(pageable);
+        return competitions.getContent();
+    }
+
+    @GetMapping("/competition/getpage")
+    @ResponseBody int GetPage()
+    {
+        Pageable pageable=PageRequest.of(0,15, Sort.Direction.ASC,"id");
+        Page<Competition> competitions=competitionRepository.findAll(pageable);
+        return competitions.getTotalPages();
     }
 
     @PostMapping("/competition")                     //添加比赛
@@ -86,7 +111,7 @@ public class CompetitionController
 //            teacher.setName(competition.getTeacher2());
 //            teacherRepository.save(teacher);
 //        }
-        return competitionRepository.findAll();
+        return ListCompetition();
     }
 
     @DeleteMapping("/competition")                      //删除比赛
@@ -107,8 +132,7 @@ public class CompetitionController
             e.printStackTrace();
         }
         competitionRepository.deleteById(map.get("id"));
-
-        return competitionRepository.findAll();
+        return ListCompetition();
     }
 
     @PostMapping("/competition/query")                  //根据要求查询比赛
@@ -180,6 +204,6 @@ public class CompetitionController
         {
             e.printStackTrace();
         }
-        return competitionRepository.findAll();
+       return  ListCompetition();
     }
 }
