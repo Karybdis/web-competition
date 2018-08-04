@@ -120,7 +120,7 @@
                                     <th>指导老师</th>
                                     <th>所属单位</th>
                                     <!-- <th>审核状态</th> -->
-                                    <th>证书预览</th>
+                                    <th>附件预览</th>
                                     <th>删除</th>
                                 </tr>
                             </thead>
@@ -163,6 +163,36 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="paging">
+                            <ul id="pglink" class="pagination">
+                                <li v-bind:class="{disabled:page==0}">
+                                    <a @click="page==0?'':getpage(page=page-1)" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li v-bind:class="{active:page+1==show_page1}">
+                                    <a @click="getpage(page=show_page1-1)">{{show_page1}}</a>
+                                </li>
+                                <li v-bind:class="{active:page+1==show_page2}" v-bind:style="{display:max_page<show_page1?'none':'inline'}">
+                                    <a @click="getpage(page=show_page2-1)">{{show_page2}}</a>
+                                </li>
+                                <li v-bind:class="{active:page+1==show_page3}" v-bind:style="{display:max_page<show_page2?'none':'inline'}">
+                                    <a @click="getpage(page=show_page3-1)">{{show_page3}}</a>
+                                </li>
+                                <li v-bind:class="{active:page+1==show_page4}" v-bind:style="{display:max_page<show_page3?'none':'inline'}">
+                                    <a @click="getpage(page=show_page4-1)">{{show_page4}}</a>
+                                </li>
+                                <li v-bind:class="{active:page+1==show_page5}" v-bind:style="{display:max_page<show_page4?'none':'inline'}">
+                                    <a @click="getpage(page=show_page5-1)">{{show_page5}}</a>
+                                </li>
+                                <li v-bind:class="{disabled:page==max_page}">
+                                    <a @click="page==max_page?'':getpage(page=page+1)" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                 </div>
 

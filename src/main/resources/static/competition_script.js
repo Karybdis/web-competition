@@ -25,7 +25,9 @@ var loading_page = new Vue({
 });
 
 
-
+/*
+    信息列表
+*/
 var message_table = new Vue({
   el: "#total-message",
   data: {
@@ -49,7 +51,7 @@ var message_table = new Vue({
             certificate             证书地址
           }
       */
-      $.get("http://106.14.223.207:8081/competition/list", function (json_data) {
+      $.get("http://106.14.223.207:8081/competition/page/0", function (json_data) {
         $.each(json_data, function (idx, item) {
           message_table.competitions.push({
             id: item.id,
@@ -64,11 +66,34 @@ var message_table = new Vue({
             certificate: item.certificate
           });
           loading_page.isActive = false;
+          // console.log(json_data);
         });
       });
     });
   },
   methods: {
+    get_msg: function (url) {
+      loading_page.isActive = true;
+      message_table.competitions.splice(0, message_table.competitions.length);
+      $.get(url, function (json_data) {
+        $.each(json_data, function (idx, item) {
+          message_table.competitions.push({
+            id: item.id,
+            year: item.year,
+            award: item.gradeLarge + item.gradeSmall,
+            category: item.nameLarge,
+            name: item.nameDetail,
+            students: item.student,
+            teachers: item.teacher,
+            belong: item.belong,
+            approval_status: item.status,
+            certificate: item.certificate
+          });
+          loading_page.isActive = false;
+          // console.log(json_data);
+        });
+      });
+    },
     delete_c: function (cid) {
       $.ajax({
         url: "http://106.14.223.207:8081/competition/",
@@ -85,6 +110,45 @@ var message_table = new Vue({
   }
 });
 
+/*
+    分页
+*/
+var pagination_link = new Vue({
+  el: "#pglink",
+  data: {
+    page: 0,
+    max_page: 1
+  },
+  mounted() {
+    this.$nextTick(function () {
+      $.get('http://106.14.223.207:8081/competition/getpage', function (pg) {
+        pagination_link.max_page = pg - 1;
+      })
+    })
+  },
+  methods: {
+    getpage: function (pg) {
+      message_table.get_msg("http://106.14.223.207:8081/competition/page/" + pg);
+    }
+  },
+  computed: {
+    show_page1: function () {
+      return this.page<3?1:this.page-1;
+    },
+    show_page2: function () {
+      return this.page<3?2:this.page;
+    },
+    show_page3: function () {
+      return this.page<3?3:this.page+1;
+    },
+    show_page4: function () {
+      return this.page<3?4:this.page+2;
+    },
+    show_page5: function () {
+      return this.page<3?5:this.page+3;
+    }
+  }
+});
 
 
 // query

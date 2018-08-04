@@ -30,7 +30,7 @@ import java.util.Map;
 public class CompetitionController
 {
     private static String UPLOADED_FOLDER = "/home/certificate/";      //存证书图片的地址
-//    private static String UPLOADED_FOLDER = "/home/cheng/下载/";
+    //    private static String UPLOADED_FOLDER = "/home/cheng/下载/";
     @Autowired
     CompetitionRepository competitionRepository;
 //    @Autowired
@@ -38,23 +38,19 @@ public class CompetitionController
 //    @Autowired
 //    TeacherRepository teacherRepository;
 
-//    @GetMapping("/competition")
-//    public String competition()
-//    {
-//        return "competition";
-//
-//    }
-
-    @GetMapping("/competition/list")                 //列出第一页比赛
-    @ResponseBody
-    public List<Competition> ListCompetition()
+    @GetMapping("/competition")
+    public String competition()
     {
-        Pageable pageable=PageRequest.of(0,15, Sort.Direction.ASC,"id");
-        Page<Competition> competitions=competitionRepository.findAll(pageable);
-        return competitions.getContent();
+        return "competition.html";
     }
 
-    @GetMapping("/competition/page/{page}")
+    @GetMapping("/addnew")
+    public String addnew()
+    {
+        return "addnew.html";
+    }
+
+    @GetMapping("/competition/page/{page}")         //返回某页数据
     @ResponseBody
     public List<Competition> PageCompetition(@PathVariable int page)
     {
@@ -63,7 +59,7 @@ public class CompetitionController
         return competitions.getContent();
     }
 
-    @GetMapping("/competition/getpage")
+    @GetMapping("/competition/getpage")             //返回页数
     @ResponseBody int GetPage()
     {
         Pageable pageable=PageRequest.of(0,15, Sort.Direction.ASC,"id");
@@ -73,7 +69,7 @@ public class CompetitionController
 
     @PostMapping("/competition")                     //添加比赛
     @ResponseBody
-    public List<Competition> AddCompetition(@RequestBody Competition competition)
+    public String AddCompetition(@RequestBody Competition competition)
     {
         competitionRepository.save(competition);
 //        if (competition.getStudent1()!="")
@@ -111,13 +107,13 @@ public class CompetitionController
 //            teacher.setName(competition.getTeacher2());
 //            teacherRepository.save(teacher);
 //        }
-        return ListCompetition();
+        return "Success";
     }
 
     @DeleteMapping("/competition")                      //删除比赛
     @ResponseBody
     @Transactional
-    public List<Competition> DeleteCompetition(@RequestBody Map<String,Long> map)
+    public String DeleteCompetition(@RequestBody Map<String,Long> map)
     {
 //        studentRepository.deleteAllByCompetitionId(map.get("id"));
 //        teacherRepository.deleteAllByCompetitionId(map.get("id"));
@@ -132,7 +128,7 @@ public class CompetitionController
             e.printStackTrace();
         }
         competitionRepository.deleteById(map.get("id"));
-        return ListCompetition();
+        return "Success";
     }
 
     @PostMapping("/competition/query")                  //根据要求查询比赛
@@ -164,7 +160,7 @@ public class CompetitionController
 
     @PostMapping("/competition/excel")
     @ResponseBody
-    public List<Competition> PutCompetitionIntoDB(@RequestParam("file") MultipartFile file)
+    public String PutCompetitionIntoDB(@RequestParam("file") MultipartFile file)
     {
         try
         {
@@ -204,6 +200,6 @@ public class CompetitionController
         {
             e.printStackTrace();
         }
-       return  ListCompetition();
+        return  "Success";
     }
 }
