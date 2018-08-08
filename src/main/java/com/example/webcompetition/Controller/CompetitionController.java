@@ -133,8 +133,7 @@ public class CompetitionController
     @ResponseBody
     public List<Competition> QueryCompetition(@RequestBody QCompetition qCompetition)
     {
-//        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGrade(),qCompetition.getName(),qCompetition.getStudent(),qCompetition.getTeacher());
-        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGradeLarge(),qCompetition.getGradeSmall(),qCompetition.getNameLarge(),qCompetition.getNameDetail(),qCompetition.getStudent(),qCompetition.getTeacher());
+        List<Competition> competitions= competitionRepository.findtest(qCompetition.getYear(),qCompetition.getGradeLarge(),qCompetition.getGradeSmall(),qCompetition.getNameLarge(),qCompetition.getNameDetail(),qCompetition.getStudent(),qCompetition.getTeacher(),qCompetition.getBelong());
         return competitions;
     }
 
