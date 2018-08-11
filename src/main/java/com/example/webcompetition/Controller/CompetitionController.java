@@ -3,6 +3,7 @@ package com.example.webcompetition.Controller;
 import com.example.webcompetition.Entity.Competition;
 import com.example.webcompetition.Entity.QCompetition;
 import com.example.webcompetition.Repository.CompetitionRepository;
+import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -13,10 +14,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +31,7 @@ import java.util.Map;
 public class CompetitionController
 {
     private static String UPLOADED_FOLDER = "/home/certificate/";      //存证书图片的地址
-    //    private static String UPLOADED_FOLDER = "/home/cheng/下载/";
+//        private static String UPLOADED_FOLDER = "/home/cheng/文档/";
     @Autowired
     CompetitionRepository competitionRepository;
 //    @Autowired
@@ -139,7 +142,7 @@ public class CompetitionController
 
     @PostMapping("/competition/upload")                 //上传证书图片
     @ResponseBody
-    public String singleFileUpload(@RequestParam("file") MultipartFile file)
+    public String FileUpload(@RequestParam("file") MultipartFile file)
     {
         if (file.isEmpty()) { return "redirect:/competition"; }
         try
@@ -155,7 +158,20 @@ public class CompetitionController
         return file.getOriginalFilename();
     }
 
-    @PostMapping("/competition/excel")
+    @GetMapping("/competition/download/{filename}")     //下载文件
+    @ResponseBody
+    public void FileDownload(@PathVariable String filename,HttpServletResponse response) throws IOException
+    {
+        File file=new File(UPLOADED_FOLDER+filename);
+        InputStream inputStream=new FileInputStream(file);
+        response.setContentType("application/force-download");
+        response.setHeader("Content-Disposition", "attachment; filename="+filename);
+        FileCopyUtils.copy(inputStream,response.getOutputStream());
+        response.flushBuffer();
+        inputStream.close();
+    }
+
+    @PostMapping("/competition/excel")                  //导入比赛
     @ResponseBody
     public String PutCompetitionIntoDB(@RequestParam("file") MultipartFile file)
     {

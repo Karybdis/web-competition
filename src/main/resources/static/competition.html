@@ -56,13 +56,40 @@
 </head>
 
 <body>
-
+    <div class="mengban">
+        <p class="p_tishi">点击灰色区域，即可返回主界面</p>
+        <div id="mengban1" class="find_body">
+            <div_find id="div_find_0" v-show="div_find_if[0]" :value="placeholder_text[add_type[0]]" onchange="Vue.set(mengban.add_type, 0, this.firstChild.value)"></div_find>
+            <div_find id="div_find_1" v-show="div_find_if[1]" :value="placeholder_text[add_type[1]]" onchange="Vue.set(mengban.add_type, 1, this.firstChild.value)"></div_find>
+            <div_find id="div_find_2" v-show="div_find_if[2]" :value="placeholder_text[add_type[2]]" onchange="Vue.set(mengban.add_type, 2, this.firstChild.value)"></div_find>
+            <div_find id="div_find_3" v-show="div_find_if[3]" :value="placeholder_text[add_type[3]]" onchange="Vue.set(mengban.add_type, 3, this.firstChild.value)"></div_find>
+            <div_find id="div_find_4" v-show="div_find_if[4]" :value="placeholder_text[add_type[4]]" onchange="Vue.set(mengban.add_type, 4, this.firstChild.value)"></div_find>
+            <div_find id="div_find_5" v-show="div_find_if[5]" :value="placeholder_text[add_type[5]]" onchange="Vue.set(mengban.add_type, 5, this.firstChild.value)"></div_find>
+            <div_find id="div_find_6" v-show="div_find_if[6]" :value="placeholder_text[add_type[6]]" onchange="Vue.set(mengban.add_type, 6, this.firstChild.value)"></div_find>
+            <div_find id="div_find_7" v-show="div_find_if[7]" :value="placeholder_text[add_type[7]]" onchange="Vue.set(mengban.add_type, 7, this.firstChild.value)"></div_find>
+            <div v-show="div_add_if[0]" class="div_add">
+                <select id="sel_type" v-show="false" class="find_text custom-input">
+                    <option value="获奖年度"></option>
+                    <option value="参赛级别"></option>
+                    <option value="获奖级别"></option>
+                    <option value="类别"></option>
+                    <option value="作品名"></option>
+                    <option value="获奖学生姓名"></option>
+                    <option value="指导老师"></option>
+                    <option value="所属单位"></option>
+                </select>
+                <input id="inp_text" v-show="false" class="find_text custom-input" type="text" placeholder="检索内容" />
+            </div>
+            <button class="  sub-btn find_btn_add find_btn_add_cnm glyphicon" @click="add"></button>
+            <button class=" glyphicon glyphicon-search sub-btn  find_btn_check" @click="do_it"></button>
+        </div>
+    </div>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
         <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
             <div class="mdl-layout__header-row">
                 <span class="mdl-layout-title" id="page-title">竞赛档案列表</span>
                 <div class="mdl-layout-spacer"></div>
-                <button class="sub-btn btn-primary">查询</button>
+                <button id="btn_check" class="sub-btn btn-primary">查询</button>
             </div>
         </header>
 
