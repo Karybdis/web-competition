@@ -1,0 +1,275 @@
+/*
+    上传附件完成后显示
+*/
+.upload-done {
+  display: none;
+  position: absolute;
+  margin-left: 10px;
+  width: 27px;
+  height: 27px;
+  background: url("./images/ok.png") no-repeat;
+  background-size: 100%;
+}
+
+/*
+    档案列表界面加载动画
+*/
+
+.loading-page {
+  display: none;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  background: #f5f5f5 !important;
+  z-index: 100;
+}
+
+.active {
+  display: inline;
+}
+
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 60px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner>div {
+  background-color: #67CF22;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4)
+  }
+  20% {
+    -webkit-transform: scaleY(1.0)
+  }
+}
+
+@keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
+}
+
+/*
+    档案列表界面主体样式
+*/
+
+.container {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  -webkit-flex-basis: 0;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 100%;
+  padding: 1rem 1.5rem
+}
+
+.card {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, .125);
+  border-radius: .125rem
+}
+
+.card-block {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem
+}
+
+.paging {
+  text-align: center;
+}
+
+/*
+    查询界面
+*/
+
+
+.mengban {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: none;
+}
+
+.div_find_big {
+  margin: -4px 0px;
+}
+
+.find_body {
+  height: 49%;
+  width: 45%;
+  margin: 10% auto 0px auto;
+  background-color: white;
+  border-radius: 4px 40px 4px 4px;
+  position: relative;
+}
+
+.find_text {
+  margin: 10px;
+  width: 19%;
+  height: 40px;
+}
+
+.find_text2 {
+  margin: 10px 14px;
+  width: 45%;
+  height: 40px;
+}
+
+input.find_text {
+  margin: 10px;
+  width: 45%;
+}
+
+.find_btn_del {
+  top: 0px;
+  background-color: #CC1D15;
+  height: 40px;
+}
+
+.find_btn_del:hover {
+  background-color: #B22C26;
+}
+
+.find_btn_del_cnm:before {
+  content: "\e020";
+}
+
+.find_btn_check {
+  top: calc(66% - 40px);
+  right: 2%;
+  position: absolute;
+  height: 80px;
+  width: 15%;
+  background-color: #337AB7;
+  color: white;
+  font-size: xx-large;
+}
+
+.find_btn_check:hover {
+  background-color: #2e6da4;
+}
+
+.find_btn_add {
+  top: calc(40% - 40px);
+  right: 2%;
+  position: absolute;
+  height: 80px;
+  width: 15%;
+  background-color: #337AB7;
+  color: white;
+  font-size: xx-large;
+}
+
+.find_btn_add_cnm:before {
+  content: "\e081";
+}
+
+.find_btn_add:hover {
+  background-color: #2e6da4;
+  outline: none;
+}
+
+.find_btn_add:focus {
+  outline: none;
+}
+
+.div_add {
+  top: calc(33% - 40px);
+  right: 3%;
+  position: absolute;
+  height: 80px;
+  width: 80px;
+}
+
+.div_find_big > input::-webkit-input-placeholder{
+  color: gainsboro;
+}
+.div_find_big > input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+  color:gainsboro;
+}
+.div_find_big > input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+  color:gainsboro;
+}
+.div_find_big > input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+  color:gainsboro;
+}
+
+.p_tishi {
+  color: white;
+  font-size: xx-large;
+  top: 27px;
+  left: calc(50% - 224px);
+  position: absolute;
+}
+
+.add_add_cnm:before{
+	content: "\e081";
+}
+.add_add{
+	top:-1px;
+	margin-left: 5%;
+}
+.select_add{
+	width: 80%;
+}
