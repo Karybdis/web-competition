@@ -1,5 +1,19 @@
 /*
     首页列表请求
+    json_data格式：
+    {
+      id                      序号
+      year                    获奖年度
+      gradeLarge              enum：国家级、省级
+      gradeSmall              enum：一等奖、二等奖
+      nameLarge               类别（省新苗等）
+      nameDetail              名称
+      student                 学生姓名
+      teacher                 指导教师
+      belong                  所属单位
+      status                  审核状态
+      certificate             证书地址
+    }
     首页列表条目与json_data的映射关系
     {
         year                                      获奖年度
@@ -38,40 +52,7 @@ var message_table = new Vue({
   },
   mounted: function () {
     this.$nextTick(function () {
-      /*
-          json_data格式：
-          {
-            id                      序号
-            year                    获奖年度
-            gradeLarge              enum：国家级、省级
-            gradeSmall              enum：一等奖、二等奖
-            nameLarge               类别（省新苗等）
-            nameDetail              名称
-            student                 学生姓名
-            teacher                 指导教师
-            belong                  所属单位
-            status                  审核状态
-            certificate             证书地址
-          }
-      */
-      $.get("http://106.14.223.207:8081/competition/page/0", function (json_data) {
-        $.each(json_data, function (idx, item) {
-          message_table.competitions.push({
-            id: item.id,
-            year: item.year,
-            award: item.gradeLarge + item.gradeSmall,
-            category: item.nameLarge,
-            name: item.nameDetail,
-            students: item.student,
-            teachers: item.teacher,
-            belong: item.belong,
-            approval_status: item.status,
-            certificate: item.certificate
-          });
-          loading_page.isActive = false;
-          // console.log(json_data);
-        });
-      });
+      message_table.get_msg("http://106.14.223.207:8081/competition/page/0");
     });
   },
   methods: {
@@ -167,24 +148,27 @@ var message_table = new Vue({
       for (var i = 0; i < j; i++) {
         this.creat_download_div(i);
       }
+    },
+    back: function () {
+      var div1 = document.getElementById("window_son");
+      div1.css("transform", " translateY(-464px)");
+      div1.css("opacity", "0");
+      div1.style.left = "0px";
+      div1.style.top = "0px";
     }
   }
 });
 
 /*下载界面*/
-var window = new Vue({
-  el: '#window_son',  
-  methods: {		 
-    back: function () {
-			var div1 = document.getElementById("window_son");
-      $("#window_son").css("transform"," translateY(-464px)");
-      $("#window_son").css("opacity","0");
-      document.getElementById("window_son").style.left="0px";
-      document.getElementById("window_son").style.top="0px";
-		},  
-	}
-});
+// var window = new Vue({
+//   el: '#window_son',
+//   methods: {
+//     ,
+//   }
+// });
 
+
+/*====================================================================================================================================================================================================================================================================================================================*/
 /*
     分页
 */
@@ -224,38 +208,6 @@ var pagination_link = new Vue({
     }
   }
 });
-
-
-// query
-
-// $.ajax({
-//   url: "http://106.14.223.207:8081/competition/query",
-//   data: JSON.stringify(query_table.query_json),
-//   type: "post",
-//   contentType: "application/json;charset=utf-8",
-//   success: function (json_data) {
-//     $.each(message_table.competitions, function (idx, item) {
-//       message_table.competitions.pop();
-//     });
-//     $.each(json_data, function (idx, item) {
-//       message_table.competitions.push({
-//         id: item.id,
-//         year: item.year,
-//         grade: item.grade,
-//         name: item.name,
-//         total_students: item.student1 +
-//           (item.student2 == "" ? "" : "、" + item.student2) +
-//           (item.student3 == "" ? "" : "、" + item.student3),
-//         teacher1: item.teacher1,
-//         teacher2: item.teacher2,
-//         belong: item.belong,
-//         approval_status: item.status,
-//         certificate: item.certificate
-//       });
-//     });
-//   }
-// });
-
 
 /*====================================================================================================================================================================================================================================================================================================================*/
 /*查询界面*/

@@ -47,12 +47,12 @@
 
     <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"> -->
-  <link rel="stylesheet" href="./quote/googleapis.css">
-  <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css"> -->
-  <link rel="stylesheet" href="./quote/material.cyan-light_blue.min.css">
-  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="mystyle.css">
+    <link rel="stylesheet" href="./quote/googleapis.css">
+    <!-- <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css"> -->
+    <link rel="stylesheet" href="./quote/material.cyan-light_blue.min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./quote/styles.css">
+    <link rel="stylesheet" href="mystyle.css">
 </head>
 
 <body>
@@ -99,14 +99,14 @@
                     <div class="card-block">
                         <div class="add-form" id="uploadpic">
                             <div id="post-certificate">
-                                <input type="file" title="支持多文件同时上传" style="display: inline-block;" multiple="multiple" @change="changeImage($event)" ref="picInput" />
+                                <input type="file" title="支持多文件同时上传" style="display: inline-block;" multiple="multiple"
+                                    ref="picInput" @change="load_file($event)"/>
                                 <button @click="post_pic" class="sub-btn btn-info">上传</button>
                                 <div style="position: relative;top: 5px;float: right;margin-left: 18px;">
-				                    			<span style="color: red;"> *</span> 支持多文件上传 
-				                    		</div>
-                                <span class="upload-done" id="oktoload"></span>
-                                <div>
-                                    <img id="preview" />
+                                    <span style="color: red;"> *</span> 支持多文件上传
+                                </div>
+                                <div class="progress-bars" :style="{display:upload_percentage!=0?'inline-block':'none'}">
+                                    <div :style="{width:upload_percentage*100+'%'}">{{upload_percentage*100+'%'}}</div>
                                 </div>
                             </div>
                         </div>
@@ -120,49 +120,49 @@
                                 </td>
                             </tr>
                             <tr class="add-table-tr">
-                                <th class="col-sm-2 control-label">获奖名称
+                                <th class="col-sm-2 control-label">类别
                                     <span style="color: red;"> *</span>
                                 </th>
                                 <td class="col-sm-10">
-                                    <select name="" class="custom-input select_add">
-                                    	<option value="大创">大创</option>
-                                    	<option value="新苗">新苗</option>
-                                    	<option value="校立项">校立项</option>
-                                    	<option value="院立项">院立项</option>
-                                    	<option value="电子设计">电子设计</option>
-                                    	<option value="智能汽车">智能汽车</option>
-                                    	<option value="挑战杯">挑战杯</option>
-                                    	<option value="互联网+">互联网+</option>
-                                    	<option value="程序设计大赛">程序设计大赛</option>
+                                    <select name="" class="custom-input select_add" v-model="add_json.nameLarge">
+                                        <option value="大创">大创</option>
+                                        <option value="新苗">新苗</option>
+                                        <option value="校立项">校立项</option>
+                                        <option value="院立项">院立项</option>
+                                        <option value="电子设计">电子设计</option>
+                                        <option value="智能汽车">智能汽车</option>
+                                        <option value="挑战杯">挑战杯</option>
+                                        <option value="互联网+">互联网+</option>
+                                        <option value="程序设计大赛">程序设计大赛</option>
                                     </select>
                                 </td>
                             </tr>
-                            <tr class="add-table-tr" >
+                            <tr class="add-table-tr">
                                 <th class="col-sm-2 control-label ">获奖级别
                                     <span style="color: red;"> *</span>
                                 </th>
                                 <td class="col-sm-10">
-                                	<select class="custom-input select_add" style="width: 45%;">
-                                    	<option value="国家级">国家级</option>
-                                    	<option value="省级">省级</option>
-                                    	<option value="校级">校级</option>
-                                    	<option value="院级">院级</option>
+                                    <select class="custom-input select_add" style="width: 45%;" v-model="add_json.gradeLarge">
+                                        <option value="国家级">国家级</option>
+                                        <option value="省级">省级</option>
+                                        <option value="校级">校级</option>
+                                        <option value="院级">院级</option>
                                     </select>
-                                    <select class="custom-input select_add" style="width: 45%;float: right;">
-                                    	<option value="一等奖">一等奖</option>
-                                    	<option value="二等奖">二等奖</option>
-                                    	<option value="三等奖">三等奖</option>
-                                    	<option value="优秀奖">优秀奖</option>
+                                    <select class="custom-input select_add" style="width: 45%;float: right;" v-model="add_json.gradeSmall">
+                                        <option value="一等奖">一等奖</option>
+                                        <option value="二等奖">二等奖</option>
+                                        <option value="三等奖">三等奖</option>
+                                        <option value="优秀奖">优秀奖</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr class="add-table-tr">
                                 <th class="col-sm-2 control-label">
-                                		获奖名称
+                                    获奖名称
                                     <span style="color: red;"> *</span>
                                 </th>
                                 <td class="col-sm-10">
-                                    <input class="custom-input " v-model="add_json.name" type="text" placeholder="竞赛名称" />
+                                    <input class="custom-input " v-model="add_json.nameDetail" type="text" placeholder="竞赛名称" />
                                 </td>
                             </tr>
                             <tr class="add-table-tr">
@@ -170,37 +170,42 @@
                                     <span style="color: red;"> *</span>
                                 </th>
                                 <td class="col-sm-10">
-                                    <input class="custom-input inp_add_short" v-model="add_json.student1" type="text" placeholder="学生姓名(1)" />
-                                		<button class="sub-btn btn-info add_add add_add_cnm glyphicon" @click="add_stu"></button>
+                                    <input class="custom-input inp_add_short" v-model="student1" type="text"
+                                        placeholder="学生姓名(1)" />
+                                    <button class="sub-btn btn-info add_add add_add_cnm glyphicon" @click="add_stu"></button>
                                 </td>
-                                
+
                             </tr>
-                            
+
                             <tr class="add-table-tr" v-show="this.tr_show_name[0]">
                                 <th class="col-sm-2 control-label"></th>
                                 <td class="col-sm-10">
-                                    <input class="custom-input inp_add_short" v-model="add_json.student2" type="text" placeholder="学生姓名(2)" />
+                                    <input class="custom-input inp_add_short" v-model="student2" type="text"
+                                        placeholder="学生姓名(2)" />
                                 </td>
                             </tr>
                             <tr class="add-table-tr" v-show="this.tr_show_name[1]">
                                 <th class="col-sm-2 control-label"></th>
                                 <td class="col-sm-10">
 
-                                    <input class="custom-input  inp_add_short" v-model="add_json.student3" type="text" placeholder="学生姓名(3)" />
+                                    <input class="custom-input  inp_add_short" v-model="student3" type="text"
+                                        placeholder="学生姓名(3)" />
                                 </td>
                             </tr>
                             <tr class="add-table-tr" v-show="this.tr_show_name[2]">
                                 <th class="col-sm-2 control-label"></th>
                                 <td class="col-sm-10">
 
-                                    <input class="custom-input  inp_add_short" v-model="add_json.student4" type="text" placeholder="学生姓名(4)" />
+                                    <input class="custom-input  inp_add_short" v-model="student4" type="text"
+                                        placeholder="学生姓名(4)" />
                                 </td>
                             </tr>
                             <tr class="add-table-tr" v-show="this.tr_show_name[3]">
                                 <th class="col-sm-2 control-label"></th>
                                 <td class="col-sm-10">
 
-                                    <input class="custom-input  inp_add_short" v-model="add_json.student5" type="text" placeholder="学生姓名(5)" />
+                                    <input class="custom-input  inp_add_short" v-model="student5" type="text"
+                                        placeholder="学生姓名(5)" />
                                 </td>
                             </tr>
 
@@ -208,15 +213,17 @@
                                 <th class="col-sm-2 control-label  ">指导教师
                                     <span style="color: red;"> *</span>
                                 </th>
-                                <td class="col-sm-10" >
-                                    <input class="custom-input  inp_add_short" v-model="add_json.teacher1" type="text" placeholder="指导教师(1)" />
-                                		<button class="sub-btn btn-info add_add add_add_cnm glyphicon" @click="add_tea"></button>
+                                <td class="col-sm-10">
+                                    <input class="custom-input  inp_add_short" v-model="teacher1" type="text"
+                                        placeholder="指导教师(1)" />
+                                    <button class="sub-btn btn-info add_add add_add_cnm glyphicon" @click="add_tea"></button>
                                 </td>
                             </tr>
                             <tr class="add-table-tr" v-show="this.tr_show_name[4]">
                                 <th></th>
                                 <td>
-                                    <input class="custom-input  inp_add_short" v-model="add_json.teacher2" type="text" placeholder="指导教师(2)" />
+                                    <input class="custom-input  inp_add_short" v-model="teacher2" type="text"
+                                        placeholder="指导教师(2)" />
                                 </td>
                             </tr>
 

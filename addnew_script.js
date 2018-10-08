@@ -22,31 +22,53 @@ var add_table = new Vue({
   data: {
     add_json: {
       year: "",
-      grade: "",
-      name: "",
-      student1: "",
-      student2: "",
-      student3: "",
-      teacher1: "",
-      teacher2: "",
+      nameLarge: "",
+      gradeLarge: "",
+      gradeSmall: "",
+      nameDetail: "",
+      student: "",
+      teacher: [],
       belong: "",
       status: "",
       certificate: ""
     },
-    tr_show_name:[false,false,false,false,false]
+    student1: "",
+    student2: "",
+    student3: "",
+    student4: "",
+    student5: "",
+    teacher1: "",
+    teacher2: "",
+    tr_show_name: [false, false, false, false, false]
   },
   methods: {
     add: function () {
+      if (add_table.student1 != "")
+        add_table.add_json.student += (add_table.add_json.student == "" ? "" : "、") + add_table.student1;
+      if (add_table.student2 != "")
+        add_table.add_json.student += (add_table.add_json.student == "" ? "" : "、") + add_table.student2;
+      if (add_table.student3 != "")
+        add_table.add_json.student += (add_table.add_json.student == "" ? "" : "、") + add_table.student3;
+      if (add_table.student4 != "")
+        add_table.add_json.student += (add_table.add_json.student == "" ? "" : "、") + add_table.student4;
+      if (add_table.add_json.student5 != "")
+        add_table.add_json.student += (add_table.add_json.student == "" ? "" : "、") + add_table.student5;
+      if (add_table.teacher1 != "")
+        add_table.add_json.teacher += (add_table.add_json.teacher == "" ? "" : "、") + add_table.teacher1;
+      if (add_table.teacher2 != "")
+        add_table.add_json.teacher += (add_table.add_json.student == "" ? "" : "、") + add_table.teacher2;
       var tip_msg = "";
       if (add_table.add_json.year == "")
         tip_msg += (tip_msg == "" ? "" : "、") + "获奖年度";
-      if (add_table.add_json.grade == "")
+      if (add_table.add_json.nameLarge == "")
+        tip_msg += (tip_msg == "" ? "" : "、") + "类别";
+      if (add_table.add_json.gradeLarge == "" || add_table.add_json.gradeSmall == "")
         tip_msg += (tip_msg == "" ? "" : "、") + "获奖级别";
-      if (add_table.add_json.name == "")
-        tip_msg += (tip_msg == "" ? "" : "、") + "所获奖项";
-      if (add_table.add_json.student1 == "")
+      if (add_table.add_json.nameDetail == "")
+        tip_msg += (tip_msg == "" ? "" : "、") + "获奖名称";
+      if (add_table.add_json.student == "")
         tip_msg += (tip_msg == "" ? "" : "、") + "学生姓名（至少一个）";
-      if (add_table.add_json.teacher1 == "")
+      if (add_table.add_json.teacher == "")
         tip_msg += (tip_msg == "" ? "" : "、") + "教师姓名（至少一个）";
       if (add_table.add_json.belong == "")
         tip_msg += (tip_msg == "" ? "" : "、") + "所属单位";
@@ -58,21 +80,22 @@ var add_table = new Vue({
           type: "post",
           contentType: "application/json;charset=utf-8",
           success: function (json_data) {
-            location.reload();
+            // location.reload();
+            $('body > div > div > div.demo-drawer.mdl-layout__drawer.mdl-color--blue-grey-900.mdl-color-text--blue-grey-50 > nav > a:nth-child(1) > i').trigger('click');
           }
         });
       }
     },
-    add_stu:function(){
-    	for(let i=0;i<4;i++){
-    		if(this.tr_show_name[i]==false)	{
-    			Vue.set(this.tr_show_name,i,true);
-    			break;
-    		}
-    	}
+    add_stu: function () {
+      for (let i = 0; i < 4; i++) {
+        if (this.tr_show_name[i] == false) {
+          Vue.set(this.tr_show_name, i, true);
+          break;
+        }
+      }
     },
-    add_tea:function(){
-    	Vue.set(this.tr_show_name,4,true);
+    add_tea: function () {
+      Vue.set(this.tr_show_name, 4, true);
     }
   }
 });
@@ -83,27 +106,34 @@ var add_table = new Vue({
 var ceritificate_pic = new Vue({
   el: "#post-certificate",
   data: {
-    file: ""
+    file: "",
+    upload_percentage: ""
   },
   methods: {
     post_pic: function () {
-      var image = new FormData();
-      image.append("file", ceritificate_pic.file);
-      console.log(image.file);
+      var data = new FormData();
+      data.append("file", ceritificate_pic.file);
       $.ajax({
         url: "http://106.14.223.207:8081/competition/upload",
-        data: image,
+        data: data,
         type: "post",
         contentType: false,
         processData: false,
+        xhr: function xhr() {
+          let xhr = $.ajaxSettings.xhr();
+          if (xhr.upload) {
+            xhr.upload.addEventListener('progress', function (e) {
+              ceritificate_pic.upload_percentage = (e.loaded / e.total).toFixed(2);
+            }, false);
+          }
+          return xhr;
+        },
         success: function (redata) {
           add_table.add_json.certificate = redata;
-          document.getElementById("preview").src = redata;
-          document.getElementById("oktoload").style.display = "inline-flex";
         }
       });
     },
-    changeImage: function (e) {
+    load_file: function (e) {
       var file = e.target.files[0];
       var reader = new FileReader();
       var that = this;
@@ -111,7 +141,6 @@ var ceritificate_pic = new Vue({
       reader.onload = function (e) {
         that.pic = this.result;
         ceritificate_pic.file = file;
-        document.getElementById("preview").src = e.target.result;
       };
     }
   }
