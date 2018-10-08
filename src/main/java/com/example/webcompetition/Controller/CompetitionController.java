@@ -3,7 +3,6 @@ package com.example.webcompetition.Controller;
 import com.example.webcompetition.Entity.Competition;
 import com.example.webcompetition.Entity.QCompetition;
 import com.example.webcompetition.Repository.CompetitionRepository;
-import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -31,13 +30,24 @@ import java.util.Map;
 public class CompetitionController
 {
     private static String UPLOADED_FOLDER = "/home/certificate/";      //存证书图片的地址
-//        private static String UPLOADED_FOLDER = "/home/cheng/文档/";
+//    private static String UPLOADED_FOLDER = "/home/cheng/文档/";
     @Autowired
     CompetitionRepository competitionRepository;
 //    @Autowired
 //    StudentRepository studentRepository;
 //    @Autowired
 //    TeacherRepository teacherRepository;
+
+    public void deldir(File folder)
+    {
+        if (folder.isDirectory())
+        {
+            File[] files=folder.listFiles();
+            for (File file:files)
+                deldir(file);
+        }
+        folder.delete();
+    }
 
     @GetMapping("/competition")
     public String competition()
@@ -118,16 +128,19 @@ public class CompetitionController
     {
 //        studentRepository.deleteAllByCompetitionId(map.get("id"));
 //        teacherRepository.deleteAllByCompetitionId(map.get("id"));
-        Competition competition=competitionRepository.findById(map.get("id")).get();
-        Path path=Paths.get(UPLOADED_FOLDER+competition.getCertificate());
-        try
-        {
-            Files.delete(path);
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+//        Competition competition=competitionRepository.findById(map.get("id")).get();
+//        Path path=Paths.get(UPLOADED_FOLDER+competition.getCertificate());
+//        try
+//        {
+//            Files.delete(path);
+//        }
+//        catch (IOException e)
+//        {
+//            e.printStackTrace();
+//        }
+//        File folder=new File("/home/cheng/文档/"+map.get("id"));   //本地测试用
+        File folder=new File("/home/certificate/"+map.get("id"));
+        deldir(folder);
         competitionRepository.deleteById(map.get("id"));
         return "Success";
     }
@@ -144,11 +157,16 @@ public class CompetitionController
     @ResponseBody
     public String FileUpload(@RequestParam("file") MultipartFile file)
     {
+        int id=2;
         if (file.isEmpty()) { return "redirect:/competition"; }
         try
         {
+//            File folder=new File("/home/cheng/文档/"+id);    //本地测试用
+            File folder=new File("/home/certificate/"+id);
+            if (!folder.exists())
+                folder.mkdir();
             byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Path path = Paths.get(folder.getPath() + "/" +file.getOriginalFilename());
             Files.write(path, bytes);
         }
         catch (IOException e)
