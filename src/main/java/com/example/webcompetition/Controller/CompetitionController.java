@@ -38,7 +38,7 @@ public class CompetitionController
 //    @Autowired
 //    TeacherRepository teacherRepository;
 
-    public void deldir(File folder)
+    public void deldir(File folder)             //递归删除文件夹
     {
         if (folder.isDirectory())
         {
@@ -157,11 +157,11 @@ public class CompetitionController
     @ResponseBody
     public String FileUpload(@RequestParam("file") MultipartFile file)
     {
-        int id=2;
+        Long id=competitionRepository.getMaxId()+1;
         if (file.isEmpty()) { return "redirect:/competition"; }
         try
         {
-//            File folder=new File("/home/cheng/文档/"+id);    //本地测试用
+//            File folder=new File("/home/cheng/文档/"+id);    //本地测试用的
             File folder=new File("/home/certificate/"+id);
             if (!folder.exists())
                 folder.mkdir();
