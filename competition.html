@@ -147,7 +147,7 @@
                                     <th>指导老师</th>
                                     <th>所属单位</th>
                                     <!-- <th>审核状态</th> -->
-                                    <th>附件预览</th>
+                                    <th>附件下载</th>
                                     <th>删除</th>
                                 </tr>
                             </thead>
@@ -178,8 +178,8 @@
                                         {{c.approval_status}}
                                     </td> -->
                                     <td>
-                                        <a :href="c.certificate">
-                                            <span class="glyphicon glyphicon-search"></span>
+                                        <a :href="c.certificate" @click="show_window($event)">
+                                            <span class="glyphicon glyphicon-download-alt"></span>
                                         </a>
                                     </td>
                                     <td>
@@ -188,6 +188,11 @@
                                         </a>
                                     </td>
                                 </tr>
+                                <div id="window_son" class="window_son">
+                                    <div class="div_title"></div>
+                                    <div class="div_file" id="div_file"></div>
+                                    <button class="bt_back sub-btn btn-primary" @click="back">返回</button>
+                                </div>
                             </tbody>
                         </table>
                         <div class="paging">

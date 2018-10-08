@@ -273,3 +273,74 @@ input.find_text {
 .select_add{
 	width: 80%;
 }
+
+/*=====================================================================================================================================*/
+/*下载界面*/
+
+.window_son{
+	
+	transition: all 0.5s ease 0s;
+	transform: translateY(-464px);
+	opacity: 0;
+	margin: 64px calc(50% - 199px);
+	z-index:1;
+	padding-top: 10px;
+	border: 1px black solid;
+	background-color: white; 
+	width: 400px;
+	position: absolute;
+	border-radius: 5px;
+	display: block;
+}
+
+.div_title{
+	text-align: center;
+	font-size: x-large;
+	
+}
+
+.div_file{
+	margin-top: 30px;
+	margin-left: 60px;
+}
+
+
+
+.div_file_sheet{
+	margin-top: 10px;
+	width: auto;
+	height: 30px;
+	background-image: url(images/download.png);
+	background-repeat: no-repeat;
+}
+
+.bt_file{
+	height: 30px;
+	margin-top:0px;
+	border: none;
+	margin-left: 35px;
+}
+
+
+.bt_file:hover{
+	text-decoration: underline;
+}
+
+.bt_back{	
+    margin-left: 293px;
+   	margin-bottom: 10px;
+    height: 40px;
+    width: 80px;
+    font-size: large;
+
+}
+
+
+.btn_search{
+	background-color: white;
+	border: none;
+}
+
+.btn_search:hover{
+	color: blue;
+}

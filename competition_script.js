@@ -31,7 +31,10 @@ var loading_page = new Vue({
 var message_table = new Vue({
   el: "#total-message",
   data: {
-    competitions: []
+    competitions: [],
+    href: ['http://www.baidu.com', 'https://segmentfault.com/q/1010000013604796', 'link3', 'link4', 'link5'], //存储后台传来的文件下载地址
+    flag: '0',
+    file_name: ['比赛详情', '获奖证书', '参赛人员', '照片文件', '其他文件'], //存储后台出来的文件名字
   },
   mounted: function () {
     this.$nextTick(function () {
@@ -72,6 +75,7 @@ var message_table = new Vue({
     });
   },
   methods: {
+    /*获取所有比赛信息*/
     get_msg: function (url) {
       loading_page.isActive = true;
       message_table.competitions.splice(0, message_table.competitions.length);
@@ -94,6 +98,7 @@ var message_table = new Vue({
         });
       });
     },
+    /*删除比赛*/
     delete_c: function (cid) {
       $.ajax({
         url: "http://106.14.223.207:8081/competition/",
@@ -106,8 +111,78 @@ var message_table = new Vue({
           location.reload();
         }
       });
+    },
+
+    /*打开下载界面*/
+    show_window: function (event) {
+      //获取后台的文件地址和文件名
+      var div1 = document.getElementById("window_son");
+      //			div1.style.display = "block";
+      var btn = event.currentTarget;
+      $(".div_title").text($(btn).parent().prev().prev().prev().prev()[0].innerText + "--下载");
+      $("#window_son").css("transform", " translateY(0px)");
+      $("#window_son").css("opacity", "1");
+      if (this.flag == 0) {
+        this.creat_down_file();
+        this.flag = 1;
+      }
+
+    },
+
+    /*判断下载链接是否正确*/
+    judge_href: function () {
+      var leng = 0;
+      leng = this.href.length;
+      if (leng !== 0) {
+        return leng;
+      } else {
+        alert('该生无相关材料,憋找了');
+      }
+    },
+
+    /**/
+    creat_download_div: function (i) {
+      var a = this.href;
+      var MyDiv = document.getElementById("div_file");
+      var div = document.createElement("div"); //createElement生成button对象
+      div.className = "div_file_sheet";
+      div.setAttribute("id", "div_" + i);
+      MyDiv.appendChild(div);
+
+      var bt = document.createElement("button"); //createElement生成button对象
+      bt.className = "bt_file";
+      bt.setAttribute("id", "bt_" + i);
+
+      bt.innerHTML = this.file_name[i];
+      bt.value = this.href[i];
+      bt.onclick = function () {
+        window.open(bt.value);
+      };
+      div.appendChild(bt); //添加到页面
+    },
+
+    creat_down_file: function () {
+      var j = this.judge_href();
+
+      for (var i = 0; i < j; i++) {
+        this.creat_download_div(i);
+      }
     }
   }
+});
+
+/*下载界面*/
+var window = new Vue({
+  el: '#window_son',  
+  methods: {		 
+    back: function () {
+			var div1 = document.getElementById("window_son");
+      $("#window_son").css("transform"," translateY(-464px)");
+      $("#window_son").css("opacity","0");
+      document.getElementById("window_son").style.left="0px";
+      document.getElementById("window_son").style.top="0px";
+		},  
+	}
 });
 
 /*
@@ -182,12 +257,16 @@ var pagination_link = new Vue({
 // });
 
 
+/*====================================================================================================================================================================================================================================================================================================================*/
+/*查询界面*/
 
+/*点击查询*/
 $("#btn_check").click(function () {
   $("div.mengban").css('display', 'block');
   $("button.find_btn_add").click();
 });
 
+/*查询组件*/
 Vue.component('div_find', {
   props: ['value'],
   template: '<div class="div_find_big"><select class="find_text custom-input"><option value="获奖年度">获奖年度</option><option value="参赛级别">参赛级别</option><option value="获奖级别">获奖级别</option><option value="类别">类别</option><option value="作品名">作品名</option><option value="获奖学生姓名">获奖学生姓名</option><option value="指导老师">指导老师</option><option value="所属单位">所属单位</option></select><input class="find_text2 custom-input" type="text" :placeholder="value" /><button class="glyphicon sub-btn btn-primary find_btn_del find_btn_del_cnm" ></button></div>',
@@ -195,8 +274,6 @@ Vue.component('div_find', {
 
 
 let num = 0;
-
-
 let mengban = new Vue({
   el: "#mengban1",
   data: {
@@ -240,6 +317,7 @@ let mengban = new Vue({
           }
       		*/
   methods: {
+    /*添加新的查询条目*/
     add: function () { //直接通过索引改变数组中的值，是不行的，，需要通过set()
       if (num >= 7) Vue.set(this.div_add_if, 0, false);
       if (num >= 8) {
@@ -259,6 +337,7 @@ let mengban = new Vue({
       num++;
       // console.log(num);
     },
+    /*读取查询条目*/
     read: function () {
       for (let i = 0; i < num && i <= 7 && num != 0; i++) {
         this.add_type[i] = $("#div_find_" + i)[0].childNodes[0].value;
@@ -266,12 +345,14 @@ let mengban = new Vue({
       }
       mengban.sel_type_chuli();
     },
+    /*辅助检查函数*/
     check: function () {
       for (let i = 0; i <= num; i++) {
         $("#div_find_" + i)[0].childNodes[0].value = mengban.add_type[i];
         $("#div_find_" + i)[0].childNodes[1].value = mengban.add_text[i];
       }
     },
+    /*发出查询请求*/
     do_it: function () {
       $("div.mengban").css('display', 'none');
       mengban.read();
@@ -311,6 +392,7 @@ let mengban = new Vue({
       // loading_page.isActive = false;
       mengban.chongzhi();
     },
+    /*辅助函数*/
     zhuanhuan: function (ans) {
       if (ans == "获奖年度") return "year";
       if (ans == "类别") return "nameLarge";
@@ -337,6 +419,7 @@ let mengban = new Vue({
         }
       });
     },
+    /*重置查询*/
     chongzhi: function () {
       num = 0;
       this.div_find_if = [false, false, false, false, false, false, false, false];
@@ -358,8 +441,8 @@ let mengban = new Vue({
   }
 })
 
+/*删除查询条目*/
 $("button.find_btn_del").click(function () {
-
   let div_del = $(this).parent();
   mengban.read();
   if (num == 8) {
@@ -375,6 +458,7 @@ $("button.find_btn_del").click(function () {
 
 });
 
+/*退出查询*/
 let flag_click = 1;
 $("#mengban1").click(function () {
   flag_click = 0;
