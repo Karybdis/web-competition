@@ -171,7 +171,7 @@ public class CompetitionController
     @ResponseBody
     public String FileUpload(@RequestParam("file") MultipartFile[] files)
     {
-        Long id=competitionRepository.getMaxId()+1;
+        Long id=competitionRepository.getIncId();
 //        File folder=new File("/home/cheng/文档/"+id);        //本地测试用的
         File folder=new File("/home/certificate/"+id);
         if (!folder.exists())
