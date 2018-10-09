@@ -26,7 +26,7 @@ public class UserController
     @Autowired
     TeacherRepository teacherRepository;
 
-    @PostMapping("/teacher")
+    @PostMapping("/teacher")        //导入教师信息
     @ResponseBody
     public List<Teacher> PutTeacherIntoDB(@RequestParam("file") MultipartFile file)
     {
@@ -61,7 +61,7 @@ public class UserController
         return teacherRepository.findAll();
     }
 
-    @PostMapping("/student")
+    @PostMapping("/student")            //导入学生信息
     @ResponseBody
     public List<Student> PutStudentIntoDB(@RequestParam("file") MultipartFile file)
     {
@@ -100,7 +100,7 @@ public class UserController
         return studentRepository.findAll();
     }
 
-    @PostMapping("/student/info")
+    @PostMapping("/student/info")       //根据学生名字返回学生信息
     @ResponseBody
     public Student StudentInfo(@RequestParam("name") String name)
     {
@@ -108,7 +108,7 @@ public class UserController
         return student;
     }
 
-    @PostMapping("/teacher/info")
+    @PostMapping("/teacher/info")       //根据老师名字返回老师信息
     @ResponseBody
     public Teacher TeacherInfo(@RequestParam("name") String name)
     {

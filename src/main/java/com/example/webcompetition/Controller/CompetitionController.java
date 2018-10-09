@@ -29,7 +29,7 @@ import java.util.Map;
 @Controller
 public class CompetitionController
 {
-    private static String UPLOADED_FOLDER = "/home/certificate/";      //存证书图片的地址
+    private static String UPLOADED_FOLDER = "/home/certificate/";      //存文件的地址
 //    private static String UPLOADED_FOLDER = "/home/cheng/文档/";
     @Autowired
     CompetitionRepository competitionRepository;
@@ -49,7 +49,7 @@ public class CompetitionController
         folder.delete();
     }
 
-    public void uploadfile(MultipartFile file,File folder)
+    public void uploadfile(MultipartFile file,File folder)    //上传文件
     {
         try
         {
@@ -75,11 +75,11 @@ public class CompetitionController
         return "addnew.html";
     }
 
-    @GetMapping("/competition/page/{page}")         //返回某页数据
+    @GetMapping("/competition/page/{page}")         //返回某页(page)数据
     @ResponseBody
     public List<Competition> PageCompetition(@PathVariable int page)
     {
-        Pageable pageable=PageRequest.of(page,15, Sort.Direction.ASC,"id");
+        Pageable pageable=PageRequest.of(page,15, Sort.Direction.ASC,"id");     //每页15个数据，依据ID正序排序
         Page<Competition> competitions=competitionRepository.findAll(pageable);
         return competitions.getContent();
     }
@@ -153,8 +153,8 @@ public class CompetitionController
 //            e.printStackTrace();
 //        }
 //        File folder=new File("/home/cheng/文档/"+map.get("id"));   //本地测试用
-        File folder=new File("/home/certificate/"+map.get("id"));
-        deldir(folder);
+        File folder=new File("/home/certificate/"+map.get("id"));     /*同时删除该比赛*/
+        deldir(folder);                                                 /*对应的所有文件*/
         competitionRepository.deleteById(map.get("id"));
         return "Success";
     }
@@ -167,15 +167,15 @@ public class CompetitionController
         return competitions;
     }
 
-    @PostMapping("/competition/upload")                 //上传证书图片
+    @PostMapping("/competition/upload")                 //上传文件
     @ResponseBody
     public String FileUpload(@RequestParam("file") MultipartFile[] files)
     {
         Long id=competitionRepository.getMaxId()+1;
-//        File folder=new File("/home/cheng/文档/"+id);    //本地测试用的
+//        File folder=new File("/home/cheng/文档/"+id);        //本地测试用的
         File folder=new File("/home/certificate/"+id);
         if (!folder.exists())
-            folder.mkdir();
+            folder.mkdir();                                   //创建存该比赛文件的文件夹
         if (files!=null && files.length>0)
         {
             for (MultipartFile file:files)
