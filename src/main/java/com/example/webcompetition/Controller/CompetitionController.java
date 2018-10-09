@@ -49,6 +49,20 @@ public class CompetitionController
         folder.delete();
     }
 
+    public void uploadfile(MultipartFile file,File folder)
+    {
+        try
+        {
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(folder.getPath() + "/" +file.getOriginalFilename());
+            Files.write(path, bytes);
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     @GetMapping("/competition")
     public String competition()
     {
@@ -155,25 +169,20 @@ public class CompetitionController
 
     @PostMapping("/competition/upload")                 //上传证书图片
     @ResponseBody
-    public String FileUpload(@RequestParam("file") MultipartFile file)
+    public String FileUpload(@RequestParam("file") MultipartFile[] files)
     {
         Long id=competitionRepository.getMaxId()+1;
-        if (file.isEmpty()) { return "redirect:/competition"; }
-        try
+//        File folder=new File("/home/cheng/文档/"+id);    //本地测试用的
+        File folder=new File("/home/certificate/"+id);
+        if (!folder.exists())
+            folder.mkdir();
+        if (files!=null && files.length>0)
         {
-//            File folder=new File("/home/cheng/文档/"+id);    //本地测试用的
-            File folder=new File("/home/certificate/"+id);
-            if (!folder.exists())
-                folder.mkdir();
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(folder.getPath() + "/" +file.getOriginalFilename());
-            Files.write(path, bytes);
+            for (MultipartFile file:files)
+                uploadfile(file,folder);
         }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
-        return file.getOriginalFilename();
+        //return file.getOriginalFilename();
+        return "success";
     }
 
     @GetMapping("/competition/download/{filename}")     //下载文件

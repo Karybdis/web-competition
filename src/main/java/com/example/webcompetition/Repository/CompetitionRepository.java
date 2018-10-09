@@ -1,6 +1,8 @@
 package com.example.webcompetition.Repository;
 
 import com.example.webcompetition.Entity.Competition;
+import org.hibernate.annotations.SQLInsert;
+import org.hibernate.annotations.SQLUpdate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
