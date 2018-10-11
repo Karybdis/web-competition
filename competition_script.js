@@ -48,7 +48,7 @@ var message_table = new Vue({
     competitions: [],
     href: ['http://www.baidu.com', 'https://segmentfault.com/q/1010000013604796', 'link3', 'link4', 'link5'], //存储后台传来的文件下载地址
     flag: '0',
-    file_name: ['比赛详情', '获奖证书', '参赛人员', '照片文件', '其他文件'], //存储后台出来的文件名字
+    file_name: ['file1', 'file2', 'file3', 'file4', 'file5'], //存储后台出来的文件名字
   },
   mounted: function () {
     this.$nextTick(function () {
@@ -149,8 +149,9 @@ var message_table = new Vue({
         this.creat_download_div(i);
       }
     },
-    back: function () {
-      var div1 = document.getElementById("window_son");
+
+    backhome: function () {
+      var div1 = $("#window_son");
       div1.css("transform", " translateY(-464px)");
       div1.css("opacity", "0");
       div1.style.left = "0px";

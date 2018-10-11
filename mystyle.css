@@ -338,21 +338,21 @@ input.find_text {
 }
 
 .bt_back{	
-    margin-left: 293px;
-   	margin-bottom: 10px;
-    height: 40px;
-    width: 80px;
-    font-size: large;
+    margin-left: 293px !important;
+   	margin-bottom: 10px !important;
+    height: 40px !important;
+    width: 80px !important;
+    font-size: large !important;
 
 }
 
 
-.btn_search{
+.btn_download{
 	background-color: white;
 	border: none;
 }
 
-.btn_search:hover{
+.btn_download:hover{
 	color: blue;
 }
 

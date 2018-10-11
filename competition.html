@@ -136,65 +136,67 @@
             <div class="container_3-707 container insideContainer_14D_s col">
                 <div class="card">
                     <div class="card-block">
-                        <table id="total-message" class="table">
-                            <thead>
-                                <tr>
-                                    <th>获奖年度</th>
-                                    <th>类别</th>
-                                    <th>奖级</th>
-                                    <th>作品名</th>
-                                    <th>获奖学生姓名</th>
-                                    <th>指导老师</th>
-                                    <th>所属单位</th>
-                                    <!-- <th>审核状态</th> -->
-                                    <th>附件下载</th>
-                                    <th>删除</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="c in competitions">
-                                    <td>
-                                        {{c.year}}
-                                    </td>
-                                    <td>
-                                        {{c.category}}
-                                    </td>
-                                    <td>
-                                        {{c.award}}
-                                    </td>
-                                    <td>
-                                        {{c.name}}
-                                    </td>
-                                    <td>
-                                        {{c.students}}
-                                    </td>
-                                    <td>
-                                        {{c.teachers}}
-                                    </td>
-                                    <td>
-                                        {{c.belong}}
-                                    </td>
-                                    <!-- <td>
-                                        {{c.approval_status}}
-                                    </td> -->
-                                    <td>
-                                        <a :href="c.certificate" @click="show_window($event)">
-                                            <span class="glyphicon glyphicon-download-alt"></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a @click="delete_c(c.id)">
-                                            <span class="glyphicon glyphicon-trash"></span>
-                                        </a>
-                                    </td>
-                                </tr>
+                        <div id="total-message">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>获奖年度</th>
+                                        <th>类别</th>
+                                        <th>奖级</th>
+                                        <th>作品名</th>
+                                        <th>获奖学生姓名</th>
+                                        <th>指导老师</th>
+                                        <th>所属单位</th>
+                                        <!-- <th>审核状态</th> -->
+                                        <th>附件下载</th>
+                                        <th>删除</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="c in competitions">
+                                        <td>
+                                            {{c.year}}
+                                        </td>
+                                        <td>
+                                            {{c.category}}
+                                        </td>
+                                        <td>
+                                            {{c.award}}
+                                        </td>
+                                        <td>
+                                            {{c.name}}
+                                        </td>
+                                        <td>
+                                            {{c.students}}
+                                        </td>
+                                        <td>
+                                            {{c.teachers}}
+                                        </td>
+                                        <td>
+                                            {{c.belong}}
+                                        </td>
+                                        <!-- <td>
+                                                    {{c.approval_status}}
+                                                </td> -->
+                                        <td>
+                                            <button class="btn_download" @click="show_window($event)">
+                                                <span class="glyphicon glyphicon-download-alt"></span>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <a @click="delete_c(c.id)">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
                                 <div id="window_son" class="window_son">
                                     <div class="div_title"></div>
                                     <div class="div_file" id="div_file"></div>
-                                    <button class="bt_back sub-btn btn-primary" @click="back">返回</button>
+                                    <button class="bt_back sub-btn btn-primary" @click="backhome">返回</button>
                                 </div>
-                            </tbody>
-                        </table>
+                            </table>
+                        </div>
                         <div class="paging">
                             <ul id="pglink" class="pagination">
                                 <li v-bind:class="{disabled:page==0}">
@@ -224,10 +226,8 @@
                                 </li>
                             </ul>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </main>
     </div>

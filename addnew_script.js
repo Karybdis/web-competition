@@ -51,12 +51,12 @@ var add_table = new Vue({
         add_table.add_json.student += (add_table.add_json.student == "" ? "" : "、") + add_table.student3;
       if (add_table.student4 != "")
         add_table.add_json.student += (add_table.add_json.student == "" ? "" : "、") + add_table.student4;
-      if (add_table.add_json.student5 != "")
+      if (add_table.student5 != "")
         add_table.add_json.student += (add_table.add_json.student == "" ? "" : "、") + add_table.student5;
       if (add_table.teacher1 != "")
         add_table.add_json.teacher += (add_table.add_json.teacher == "" ? "" : "、") + add_table.teacher1;
       if (add_table.teacher2 != "")
-        add_table.add_json.teacher += (add_table.add_json.student == "" ? "" : "、") + add_table.teacher2;
+        add_table.add_json.teacher += (add_table.add_json.teacher == "" ? "" : "、") + add_table.teacher2;
       var tip_msg = "";
       if (add_table.add_json.year == "")
         tip_msg += (tip_msg == "" ? "" : "、") + "获奖年度";
@@ -135,6 +135,7 @@ var ceritificate_pic = new Vue({
     },
     load_file: function (e) {
       var file = e.target.files[0];
+      /*多文件上传*/
       var reader = new FileReader();
       var that = this;
       reader.readAsDataURL(file);
