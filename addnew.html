@@ -99,14 +99,21 @@
                     <div class="card-block">
                         <div class="add-form" id="uploadpic">
                             <div id="post-certificate">
-                                <input type="file" title="支持多文件同时上传" style="display: inline-block;" multiple="multiple"
-                                    ref="picInput" @change="load_file($event)"/>
-                                <button @click="post_pic" class="sub-btn btn-info">上传</button>
-                                <div style="position: relative;top: 5px;float: right;margin-left: 18px;">
-                                    <span style="color: red;"> *</span> 支持多文件上传
-                                </div>
+                                <form id="postFile" enctype="multipart/form-data" method="post">
+                                    <input type="file" title="支持多文件同时上传" style="display: inline-block;" multiple="multiple" ref="picInput"/>
+                                    <button type="button" @click="post_file" class="sub-btn btn-info">上传</button>
+                                    <div style="position: relative;top: 5px;float: right;margin-left: 18px;">
+                                        <span style="color: red;"> *</span> 支持多文件上传
+                                    </div>
+                                </form>
+
                                 <div class="progress-bars" :style="{display:upload_percentage!=0?'inline-block':'none'}">
                                     <div :style="{width:upload_percentage*100+'%'}">{{upload_percentage*100+'%'}}</div>
+                                </div>
+
+                                <div class="upload-from-excel">
+                                    <input type="file" style="display:inline-block;" accept=""/>
+                                    <button class="sub-btn btn-info" @click="post_excel">从表格导入</button>
                                 </div>
                             </div>
                         </div>

@@ -1,27 +1,5 @@
-/*
-    上传附件完成后显示
-*/
+/*=====================================================================================================================================*/
 
-.progress-bars {
-  width: 100%;
-  height: 25px;
-  display: inline-block;
-  border: 1px solid #80808087;
-  border-radius: 3px;
-  margin-top: 10px;
-}
-
-.progress-bars>div {
-  width: 0;
-  color: #fff;
-  background-color: #337ab7;
-  text-align: center;
-  transition: width .6s ease;
-  height: 23px;
-  padding: 1px 0;
-  border-radius: 2px;
-  line-height: 20px;
-}
 /*
     档案列表界面加载动画
 */
@@ -99,6 +77,7 @@
     -webkit-transform: scaleY(1.0);
   }
 }
+/*=====================================================================================================================================*/
 
 /*
     档案列表界面主体样式
@@ -147,6 +126,7 @@
 .paging {
   text-align: center;
 }
+/*=====================================================================================================================================*/
 
 /*
     查询界面
@@ -356,6 +336,9 @@ input.find_text {
 	color: blue;
 }
 
+/*=====================================================================================================================================*/
+
+/*添加界面*/
 
 .add-table {
   width: 45%;
@@ -364,6 +347,7 @@ input.find_text {
 }
 
 .add-form {
+  height: calc(100% - 2.5em);
   width: calc(50% - 20px);
   position: absolute;
   margin-left: 50%;
@@ -376,6 +360,7 @@ input.find_text {
 
 #post-certificate {
   margin-right: 20px;
+  height: 100%;
 }
 
 .sub-btn {
@@ -452,4 +437,34 @@ input.find_text {
 input::-webkit-input-placeholder {
   /* WebKit browsers */
   color: rgba(0, 0, 0, 0.3);
+}
+
+/*
+    上传附件完成后显示
+*/
+
+.progress-bars {
+  width: 100%;
+  height: 25px;
+  display: inline-block;
+  border: 1px solid #80808087;
+  border-radius: 3px;
+  margin-top: 10px;
+}
+
+.progress-bars>div {
+  width: 0;
+  color: #fff;
+  background-color: #337ab7;
+  text-align: center;
+  transition: width .6s ease;
+  height: 23px;
+  padding: 1px 0;
+  border-radius: 2px;
+  line-height: 20px;
+}
+
+.upload-from-excel {
+  bottom: 0;
+  position: absolute;
 }

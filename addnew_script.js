@@ -110,9 +110,9 @@ var ceritificate_pic = new Vue({
     upload_percentage: ""
   },
   methods: {
-    post_pic: function () {
-      var data = new FormData();
-      data.append("file", ceritificate_pic.file);
+    post_file: function () {
+      var data = new FormData($('#postFile')[0]);
+      console.log(data);
       $.ajax({
         url: "http://106.14.223.207:8081/competition/upload",
         data: data,
@@ -133,16 +133,19 @@ var ceritificate_pic = new Vue({
         }
       });
     },
-    load_file: function (e) {
-      var file = e.target.files[0];
-      /*多文件上传*/
-      var reader = new FileReader();
-      var that = this;
-      reader.readAsDataURL(file);
-      reader.onload = function (e) {
-        that.pic = this.result;
-        ceritificate_pic.file = file;
-      };
+    post_excel: function () {
+      var data = new FormData();
+      data.append("file",$('#post-certificate > div.upload-from-excel > input[type="file"]')[0].files[0]);
+      $.ajax({
+        url: "http://106.14.223.207:8081/competition/excel",
+        data: data,
+        type: "post",
+        contentType: false,
+        processData: false,
+        success: function (redata) {
+          add_table.add_json.certificate = redata;
+        }
+      });
     }
   }
 });
