@@ -172,7 +172,7 @@ public class CompetitionController
     public String FileUpload(@RequestParam("file") MultipartFile[] files)
     {
         Long id=competitionRepository.getIncId();
-//        File folder=new File("/home/cheng/文档/"+id);        //本地测试用的
+//        File folder=new File("/home/cheng/文档/"+id);        //本地测试用
         File folder=new File("/home/certificate/"+id);
         if (!folder.exists())
             folder.mkdir();                                   //创建存该比赛文件的文件夹
@@ -185,11 +185,14 @@ public class CompetitionController
         return "success";
     }
 
-    @GetMapping("/competition/download/{filename}")     //下载文件
+    @GetMapping("/competition/download")                  //下载文件
     @ResponseBody
-    public void FileDownload(@PathVariable String filename,HttpServletResponse response) throws IOException
+    public void FileDownload(@RequestParam(value = "id") Long id,
+                             @RequestParam(value = "filename") String filename,
+                             HttpServletResponse response) throws IOException
     {
-        File file=new File(UPLOADED_FOLDER+filename);
+        File file=new File("/home/certificate/"+id+"/"+filename);
+//        File file=new File("/home/cheng/文档/"+id+"/"+filename);      //本地测试用
         InputStream inputStream=new FileInputStream(file);
         response.setContentType("application/force-download");
         response.setHeader("Content-Disposition", "attachment; filename="+filename);
