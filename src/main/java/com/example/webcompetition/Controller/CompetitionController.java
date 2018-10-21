@@ -23,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -172,14 +173,14 @@ public class CompetitionController
     public String FileUpload(@RequestParam("file") MultipartFile[] files)
     {
         Long id=competitionRepository.getIncId();
-//        File folder=new File("/home/cheng/文档/"+id);        //本地测试用
-        File folder=new File("/home/certificate/"+id);
+        File folder=new File("/home/cheng/文档/"+id);        //本地测试用
+//        File folder=new File("/home/certificate/"+id);
         if (!folder.exists())
             folder.mkdir();                                   //创建存该比赛文件的文件夹
         if (files!=null && files.length>0)
         {
             for (MultipartFile file:files)
-                uploadfile(file,folder);
+                uploadfile(file, folder);
         }
         //return file.getOriginalFilename();
         return "success";
@@ -199,6 +200,19 @@ public class CompetitionController
         FileCopyUtils.copy(inputStream,response.getOutputStream());
         response.flushBuffer();
         inputStream.close();
+    }
+
+    @GetMapping("/competition/filename")                //获取某比赛所有相关附件文件名字
+    @ResponseBody
+    public List<String> GetFileName(@RequestParam Long id)
+    {
+        List<String> filename=new ArrayList<>();
+//        File folder=new File("/home/cheng/文档/"+id);   //本地测试用
+        File folder=new File("/home/certificate/"+id);
+        File[] files=folder.listFiles();
+        for (File file:files)
+            filename.add(file.getName());
+        return filename;
     }
 
     @PostMapping("/competition/excel")                  //导入比赛
