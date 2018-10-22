@@ -41,6 +41,27 @@ var add_table = new Vue({
     teacher2: "",
     tr_show_name: [false, false, false, false, false]
   },
+  mounted: function () {
+    this.$nextTick(function () {
+      var id = location.search.substring(4);
+      $.get('http://106.14.223.207:8081/competition/information?id=' + id, function (competition_data) {
+        add_table.add_json = competition_data;
+        var ss = competition_data.student.split('、');
+        if (ss.length > 0) add_table.student1 = ss[0];
+        if (ss.length > 1) add_table.student2 = ss[1], $('#add-message > tbody > tr:nth-child(5) > td > button').click();
+        if (ss.length > 2) add_table.student3 = ss[2], $('#add-message > tbody > tr:nth-child(5) > td > button').click();
+        if (ss.length > 3) add_table.student4 = ss[3], $('#add-message > tbody > tr:nth-child(5) > td > button').click();
+        if (ss.length > 4) add_table.student5 = ss[4], $('#add-message > tbody > tr:nth-child(5) > td > button').click();
+
+        var tt = competition_data.teacher.split('、');
+        if (tt.length > 0) add_table.teacher1 = tt[0];
+        if (tt.length > 1) add_table.teacher2 = tt[1], $('#add-message > tbody > tr:nth-child(10) > td > button').click();
+
+        add_table.add_json.student = "";
+        add_table.add_json.teacher = "";
+      });
+    })
+  },
   methods: {
     add: function () {
       if (add_table.student1 != "")
@@ -79,7 +100,7 @@ var add_table = new Vue({
           data: JSON.stringify(add_table.add_json),
           type: "post",
           contentType: "application/json;charset=utf-8",
-          success: function (json_data) {
+          success: function () {
             // location.reload();
             $('body > div > div > div.demo-drawer.mdl-layout__drawer.mdl-color--blue-grey-900.mdl-color-text--blue-grey-50 > nav > a:nth-child(1) > i').trigger('click');
           }
@@ -112,12 +133,12 @@ var ceritificate_pic = new Vue({
   methods: {
     post_file: function () {
       var data = new FormData();
-      for(var i=0;i<$('#postFile > input[type="file"]')[0].files.length;i++)
-        data.append("file",$('#postFile > input[type="file"]')[0].files[i]);
+      for (var i = 0; i < $('#postFile > input[type="file"]')[0].files.length; i++)
+        data.append("file", $('#postFile > input[type="file"]')[0].files[i]);
       $.ajax({
-        url: "http://106.14.223.207:8081/competition/upload",
+        url: "http://106.14.223.207:8081/competition/upload?id="+location.search.substring(4),
         data: data,
-        type: "post",
+        type: "put",
         contentType: false,
         processData: false,
         xhr: function xhr() {
@@ -136,7 +157,7 @@ var ceritificate_pic = new Vue({
     },
     post_excel: function () {
       var data = new FormData();
-      data.append("file",$('#post-certificate > div.upload-from-excel > input[type="file"]')[0].files[0]);
+      data.append("file", $('#post-certificate > div.upload-from-excel > input[type="file"]')[0].files[0]);
       $.ajax({
         url: "http://106.14.223.207:8081/competition/excel",
         data: data,

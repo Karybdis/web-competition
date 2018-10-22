@@ -274,7 +274,7 @@ input.find_text {
 	transform: translateY(-464px);
 	opacity: 0;
 	margin: 64px calc(50% - 199px);
-	z-index:1;
+	z-index:100;
 	padding-top: 10px;
 	border: 1px black solid;
 	background-color: white; 
@@ -343,7 +343,6 @@ input.find_text {
 .add-table {
   width: 45%;
   max-width: 45%;
-  ;
 }
 
 .add-form {

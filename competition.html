@@ -150,6 +150,7 @@
                                         <!-- <th>审核状态</th> -->
                                         <th>附件下载</th>
                                         <th>删除</th>
+                                        <th>修改</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -179,13 +180,18 @@
                                             {{c.approval_status}}
                                         </td> -->
                                         <td>
-                                            <button class="btn_download" @click="show_window($event)">
+                                            <button class="btn_download" @click="show_window($event,c.id,c.name)">
                                                 <span class="glyphicon glyphicon-download-alt"></span>
                                             </button>
                                         </td>
                                         <td>
                                             <a @click="delete_c(c.id)">
                                                 <span class="glyphicon glyphicon-trash"></span>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a :href="'./modify.html?id='+c.id">
+                                                <span class="glyphicon glyphicon-edit"></span>
                                             </a>
                                         </td>
                                     </tr>

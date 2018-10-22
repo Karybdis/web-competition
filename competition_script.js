@@ -46,9 +46,8 @@ var message_table = new Vue({
   el: "#total-message",
   data: {
     competitions: [],
-    href: ['http://www.baidu.com', 'https://segmentfault.com/q/1010000013604796', 'link3', 'link4', 'link5'], //存储后台传来的文件下载地址
-    flag: '0',
-    file_name: ['file1', 'file2', 'file3', 'file4', 'file5'], //存储后台出来的文件名字
+    file_name: [], //存储后台出来的文件名字
+    file_cnt: 0 //文件数量
   },
   mounted: function () {
     this.$nextTick(function () {
@@ -95,25 +94,28 @@ var message_table = new Vue({
     },
 
     /*打开下载界面*/
-    show_window: function (event) {
+    show_window: function (event, id, name) {
       //获取后台的文件地址和文件名
       var div1 = document.getElementById("window_son");
       //			div1.style.display = "block";
-      var btn = event.currentTarget;
-      $(".div_title").text($(btn).parent().prev().prev().prev().prev()[0].innerText + "--下载");
-      $("#window_son").css("transform", " translateY(0px)");
-      $("#window_son").css("opacity", "1");
-      if (this.flag == 0) {
-        this.creat_down_file();
-        this.flag = 1;
-      }
+
+      $.get("http://106.14.223.207:8081/competition/filename?id=" + id, function (files_name) {
+        message_table.file_cnt = files_name.length;
+        for (var i = 0; i < message_table.file_cnt; i++)
+          Vue.set(message_table.file_name, i, files_name[i]);
+        var btn = event.currentTarget;
+        $(".div_title").text(name + "--下载");
+        $("#window_son").css("transform", " translateY(0px)");
+        $("#window_son").css("opacity", "1");
+        message_table.creat_down_file(id);
+      });
 
     },
 
-    /*判断下载链接是否正确*/
+    /*判断下载链接个数*/
     judge_href: function () {
       var leng = 0;
-      leng = this.href.length;
+      leng = message_table.file_cnt;
       if (leng !== 0) {
         return leng;
       } else {
@@ -121,9 +123,8 @@ var message_table = new Vue({
       }
     },
 
-    /**/
-    creat_download_div: function (i) {
-      var a = this.href;
+    /*添加某个文件下载*/
+    creat_download_div: function (i,cid) {
       var MyDiv = document.getElementById("div_file");
       var div = document.createElement("div"); //createElement生成button对象
       div.className = "div_file_sheet";
@@ -134,40 +135,35 @@ var message_table = new Vue({
       bt.className = "bt_file";
       bt.setAttribute("id", "bt_" + i);
 
-      bt.innerHTML = this.file_name[i];
-      bt.value = this.href[i];
+      bt.innerHTML = message_table.file_name[i];
+      bt.value="http://106.14.223.207:8081/competition/download?id="+cid+"&filename="+bt.innerHTML;
       bt.onclick = function () {
         window.open(bt.value);
       };
       div.appendChild(bt); //添加到页面
     },
 
-    creat_down_file: function () {
-      var j = this.judge_href();
+    /*添加所有下载*/
+    creat_down_file: function (cid) {
+      var j = message_table.judge_href();
 
       for (var i = 0; i < j; i++) {
-        this.creat_download_div(i);
+        message_table.creat_download_div(i,cid);
       }
     },
 
+    /*从下载界面返回主页 */
     backhome: function () {
       var div1 = $("#window_son");
       div1.css("transform", " translateY(-464px)");
       div1.css("opacity", "0");
-      div1.style.left = "0px";
-      div1.style.top = "0px";
+      //div1.style.left = "0px";
+      //div1.style.top = "0px";
+
+      $("#div_file").children("[id^=div]").remove(); 
     }
   }
 });
-
-/*下载界面*/
-// var window = new Vue({
-//   el: '#window_son',
-//   methods: {
-//     ,
-//   }
-// });
-
 
 /*====================================================================================================================================================================================================================================================================================================================*/
 /*
