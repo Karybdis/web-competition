@@ -136,6 +136,14 @@ public class CompetitionController
         return "Success";
     }
 
+    @PutMapping("/competition")                         //修改比赛
+    @ResponseBody
+    public String UpdateCompetition(@RequestBody Competition competition)
+    {
+        competitionRepository.save(competition);
+        return "success";
+    }
+
     @DeleteMapping("/competition")                      //删除比赛
     @ResponseBody
     @Transactional
@@ -173,8 +181,8 @@ public class CompetitionController
     public String FileUpload(@RequestParam("file") MultipartFile[] files)
     {
         Long id=competitionRepository.getIncId();
-        File folder=new File("/home/cheng/文档/"+id);        //本地测试用
-//        File folder=new File("/home/certificate/"+id);
+//        File folder=new File("/home/cheng/文档/"+id);        //本地测试用
+        File folder=new File("/home/certificate/"+id);
         if (!folder.exists())
             folder.mkdir();                                   //创建存该比赛文件的文件夹
         if (files!=null && files.length>0)
@@ -183,7 +191,7 @@ public class CompetitionController
                 uploadfile(file, folder);
         }
         //return file.getOriginalFilename();
-        return "success";
+        return "Success";
     }
 
     @GetMapping("/competition/download")                  //下载文件
