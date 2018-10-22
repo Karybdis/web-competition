@@ -136,12 +136,11 @@ public class CompetitionController
         return "Success";
     }
 
-    @PutMapping("/competition")                         //修改比赛
+    @GetMapping("/competition/information")             //返回需要修改的比赛的信息
     @ResponseBody
-    public String UpdateCompetition(@RequestBody Competition competition)
+    public Competition EditCompetition(@RequestParam Long id)
     {
-        competitionRepository.save(competition);
-        return "success";
+        return  competitionRepository.findById(id).get();
     }
 
     @DeleteMapping("/competition")                      //删除比赛
@@ -194,6 +193,23 @@ public class CompetitionController
         return "Success";
     }
 
+    @PutMapping("/competition/upload")                 //修改上传文件
+    @ResponseBody
+    public String FileUpload(@RequestParam(value = "id") Long id,@RequestParam("file") MultipartFile[] files)
+    {
+//        File folder=new File("/home/cheng/文档/"+id);        //本地测试用
+        File folder=new File("/home/certificate/"+id);
+        if (!folder.exists())
+            folder.mkdir();                                   //创建存该比赛文件的文件夹
+        if (files!=null && files.length>0)
+        {
+            for (MultipartFile file:files)
+                uploadfile(file, folder);
+        }
+        //return file.getOriginalFilename();
+        return "Success";
+    }
+
     @GetMapping("/competition/download")                  //下载文件
     @ResponseBody
     public void FileDownload(@RequestParam(value = "id") Long id,
@@ -217,6 +233,8 @@ public class CompetitionController
         List<String> filename=new ArrayList<>();
 //        File folder=new File("/home/cheng/文档/"+id);   //本地测试用
         File folder=new File("/home/certificate/"+id);
+        if (!folder.exists())
+            return null;
         File[] files=folder.listFiles();
         for (File file:files)
             filename.add(file.getName());
