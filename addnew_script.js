@@ -111,8 +111,9 @@ var ceritificate_pic = new Vue({
   },
   methods: {
     post_file: function () {
-      var data = new FormData($('#postFile')[0]);
-      console.log(data);
+      var data = new FormData();
+      for(var i=0;i<$('#postFile > input[type="file"]')[0].files.length;i++)
+        data.append("file",$('#postFile > input[type="file"]')[0].files[i]);
       $.ajax({
         url: "http://106.14.223.207:8081/competition/upload",
         data: data,
