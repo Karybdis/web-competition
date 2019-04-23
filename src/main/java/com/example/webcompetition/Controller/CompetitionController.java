@@ -76,6 +76,12 @@ public class CompetitionController
         return "addnew.html";
     }
 
+    @GetMapping("/modify")
+    public String modify()
+    {
+        return "modify.html";
+    }
+
     @GetMapping("/competition/page/{page}")         //返回某页(page)数据
     @ResponseBody
     public List<Competition> PageCompetition(@PathVariable int page)
@@ -161,7 +167,7 @@ public class CompetitionController
 //            e.printStackTrace();
 //        }
 //        File folder=new File("/home/cheng/文档/"+map.get("id"));   //本地测试用
-        File folder=new File("/home/certificate/"+map.get("id"));     /*同时删除该比赛*/
+        File folder=new File("E:\\certificate\\"+map.get("id"));     /*同时删除该比赛*/
         deldir(folder);                                                 /*对应的所有文件*/
         competitionRepository.deleteById(map.get("id"));
         return "Success";
@@ -181,7 +187,7 @@ public class CompetitionController
     {
         Long id=competitionRepository.getIncId();
 //        File folder=new File("/home/cheng/文档/"+id);        //本地测试用
-        File folder=new File("/home/certificate/"+id);
+        File folder=new File("E:\\certificate\\"+id);
         if (!folder.exists())
             folder.mkdir();                                   //创建存该比赛文件的文件夹
         if (files!=null && files.length>0)
@@ -198,7 +204,7 @@ public class CompetitionController
     public String FileUpload(@RequestParam(value = "id") Long id,@RequestParam("file") MultipartFile[] files)
     {
 //        File folder=new File("/home/cheng/文档/"+id);        //本地测试用
-        File folder=new File("/home/certificate/"+id);
+        File folder=new File("E:\\certificate\\"+id);
         if (!folder.exists())
             folder.mkdir();                                   //创建存该比赛文件的文件夹
         if (files!=null && files.length>0)
@@ -216,7 +222,7 @@ public class CompetitionController
                              @RequestParam(value = "filename") String filename,
                              HttpServletResponse response) throws IOException
     {
-        File file=new File("/home/certificate/"+id+"/"+filename);
+        File file=new File("E:\\certificate\\"+id+"/"+filename);
 //        File file=new File("/home/cheng/文档/"+id+"/"+filename);      //本地测试用
         InputStream inputStream=new FileInputStream(file);
         response.setContentType("application/force-download");
@@ -232,7 +238,7 @@ public class CompetitionController
     {
         List<String> filename=new ArrayList<>();
 //        File folder=new File("/home/cheng/文档/"+id);   //本地测试用
-        File folder=new File("/home/certificate/"+id);
+        File folder=new File("E:\\certificate\\"+id);
         if (!folder.exists())
             return null;
         File[] files=folder.listFiles();
